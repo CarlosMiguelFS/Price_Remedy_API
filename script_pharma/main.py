@@ -6,8 +6,7 @@ from indiana import check_indiana
 from pague_menos import check_pague_menos
 
 def main():
-    
-    # Pega o CEP da linha de comando ou pede para o usuário
+
     if len(sys.argv) > 1:
         cep = sys.argv[1]
     else:
@@ -17,7 +16,6 @@ def main():
     
     resultados_encontrados = []
 
-    # Lista de funções que queremos rodar
     farmacias_checkers = [
         check_drogasil,
         check_pacheco,
