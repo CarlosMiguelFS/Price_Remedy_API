@@ -1,4 +1,3 @@
-import requests
 from crawler_settings import Crawler
 
 def check_santa_lucia(cep):
