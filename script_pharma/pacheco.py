@@ -1,4 +1,5 @@
 import requests
+import httpx
 
 def check_pacheco(cep):
     
@@ -20,7 +21,7 @@ def check_pacheco(cep):
         "postalCode": cep
     }
 
-    resp_frete = requests.post(url_pharm, json= payload ,headers=headers).json()
+    resp_frete = httpx.post(url_pharm, json= payload ,headers=headers).json()
     
     if resp_frete.get("logisticsInfo"):
         for product in resp_frete["logisticsInfo"][0]["slas"]:

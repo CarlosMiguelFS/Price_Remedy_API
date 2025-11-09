@@ -1,6 +1,7 @@
 import requests
 import json
 import base64
+import httpx
 
 class Crawler:
     def request_pattern_price(url):
@@ -27,7 +28,7 @@ class Crawler:
             raise ValueError("O link precisa ser adicionado a variavel 'Base64' na criptografia")
 
         url_freight = url_trat.replace("{base64}", base64_str) 
-        response_freight = requests.get(url_freight, headers=headers).json()
+        response_freight = httpx.get(url_freight, headers=headers).json()
 
         if "SANTA_LUCIA" == pharmacy or "PAGUE_MENOS" == pharmacy:
             slas = response_freight.get("data", {}).get("shipping", {}).get("logisticsInfo", [{}])[0].get("slas", [])

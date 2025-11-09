@@ -1,4 +1,5 @@
 import requests
+import httpx
 
 def check_drogasil(cep):
     
@@ -34,10 +35,10 @@ def check_drogasil(cep):
         "User-Agent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/142.0.0.0 Safari/537.36"
     }
 
-    resp_price = requests.post(url_drogasil, json=json_data, headers=headers).json()
+    resp_price = httpx.post(url_drogasil, json=json_data, headers=headers).json()
     product_description["price"] = float(resp_price["data"]["priceBySku"]["domains"]["price"]["value"])
 
-    resp_freight = requests.post(url_drogasil, json=json_freight, headers=headers).json()
+    resp_freight = httpx.post(url_drogasil, json=json_freight, headers=headers).json()
     
     data_freight = resp_freight.get("data")
 
