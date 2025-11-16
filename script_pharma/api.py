@@ -13,7 +13,7 @@ origins = [
     "https://3000-i9ej1of031jvjmrchzi0z-c6ad99b1.manus.computer",
     "https://medradar-dnhsdsop.manus.space",
     "https://lovable.dev/projects/7dbf5259-3626-42d5-8b98-22dd3c29409d",
-    "https://app.base44.com/apps/69190e47002195fa7c0dd7ec/editor/preview/Home",
+    "https://app-9a8765fc-728b-4155-b95f-496f84e6f469.base44.app",
     "http://localhost:3000",
 ]
 
