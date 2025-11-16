@@ -1,12 +1,26 @@
 from fastapi import FastAPI
 import uvicorn
 
+from fastapi.middleware.cors import CORSMiddleware
 from drograsil import check_drogasil
 from pacheco import check_pacheco
 from indiana import check_indiana
 from pague_menos import check_pague_menos
 
 app= FastAPI()
+
+origins = [
+    "https://3000-i9ej1of031jvjmrchzi0z-c6ad99b1.manus.computer",
+    "http://localhost:3000",
+]
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,
+    allow_credentials=True,
+    allow_methods=["*"], 
+    allow_headers=["*"],
+)
 
 farmacias_checkers = [
     check_drogasil,
