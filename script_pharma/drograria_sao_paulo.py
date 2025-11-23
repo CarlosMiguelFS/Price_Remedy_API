@@ -28,6 +28,6 @@ def check_drogaria_sao_paulo(cep,produto):
             if product.get("pickupStoreInfo", {}).get("address"):
                 product_description["endereco"] = product["pickupStoreInfo"]["address"]  
                 product_description["value"] = float(endereco["items"][0]["price"]/100)
-                product_description["loja"] = "Pacheco"
+                product_description["loja"] = "Drogaria sao paulo"
                 return product_description
     return None
