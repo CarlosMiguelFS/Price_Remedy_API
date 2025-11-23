@@ -1,8 +1,15 @@
-import requests
 import httpx
 
-def check_pacheco(cep):
+def check_pacheco(cep,produto):
     
+
+    d_para = {
+        "Mounjaro Tirzepatida 2,5mg/ml 0,5ml Injetável":"887528",
+        "Mounjaro Tirzepatida 5mg/ml 0,5ml Injetável":"887455",
+        "Mounjaro Tirzepatida 7,5mg/ml 0,5ml Injetável":"887951",
+        "Mounjaro Tirzepatida 10mg/ml 0,5ml Injetável":"888060"
+    }
+
     product_description = {}
     url_pharm = "https://www.drogariaspacheco.com.br/api/checkout/pub/orderforms/simulation"
     headers = {
@@ -12,7 +19,7 @@ def check_pacheco(cep):
     payload ={
         "items":[
             {
-                "id": "887455",
+                "id": d_para[produto.strip()],
                 "quantity": 1,
                 "seller": "1"
             }

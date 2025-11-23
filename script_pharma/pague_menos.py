@@ -1,14 +1,33 @@
-from crawler_settings import Crawler
+def check_pague_menos(cep,produto):
+    import httpx
+    # Removido product_description = {} pois não é mais usado
 
-def check_pague_menos(cep):
+    d_para = {
+        "Mounjaro Tirzepatida 5mg/ml 0,5ml Injetável":"166503",
+        "Mounjaro Tirzepatida 2,5mg/ml 0,5ml Injetável":"166502",
+        "Mounjaro Tirzepatida 7,5mg/ml 0,5ml Injetável":"166507",
+        "Mounjaro Tirzepatida 10mg/ml 0,5ml Injetável":"166506"
+    }
 
-    id_produto = "52148"
-    url_frete = "https://www.paguemenos.com.br/_v/segment/graphql/v1?workspace=master&maxAge=medium&appsEtag=remove&domain=store&locale=pt-BR&__bindingId=23424e23-86bb-4397-98b0-238d88d7f528&operationName=getShippingEstimates&variables=%7B%7D&extensions=%7B%22persistedQuery%22%3A%7B%22version%22%3A1%2C%22sha256Hash%22%3A%2247eca1b9511ec8c41338860ff3532e6cbd7d5a8f3f4a375fab2f8eea2add3d6f%22%2C%22sender%22%3A%22paguemenos.store-theme%407.x%22%2C%22provider%22%3A%22vtex.store-graphql%402.x%22%7D%2C%22variables%22%3A%22{base64}%3D%22%7D"
+    payload = {
+        "items":[
+            {
+                "id":d_para[produto.strip()],
+                "quantity":1,
+                "seller":"1"
+            }
+        ],
+        "country":"BRA",
+        "postalCode":f"{cep}"
+    }
 
-    endereco = Crawler.requests_pattern_freight(cep, id_produto, url_frete,"PAGUE_MENOS")
-
-    if endereco:
-        return {"loja": "Pague Menos", "disponibilidade": endereco}
+    headers = {"User-Agent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/139.0.0.0 Safari/537.36 OPR/123.0.0.0"}
+    endereco = httpx.post("https://www.paguemenos.com.br/api/checkout/pub/orderForms/simulation", json=payload, headers=headers).json()
+    
+    # Lógica de retorno corrigida:
+    for values in endereco.get("pickupPoints",[]):
+        # Retorna o primeiro endereço encontrado
+        if values.get("address"):
+            return {"loja": "Pague Menos", "endereco": dict(values["address"])} 
 
     return None
-

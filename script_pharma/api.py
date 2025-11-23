@@ -57,7 +57,6 @@ def formatar_resultado(res):
         bairro = endereco.get('district', '')
         cidade = endereco.get('city', '')
         estado = endereco.get('sgState', '')
-    
     else:
         rua = endereco.get('street', '')
         num = endereco.get('number', '')
@@ -75,14 +74,14 @@ def formatar_resultado(res):
         "estado": estado
     }
 @app.get("/buscar/{cep}")
-def buscar_remedio_cep(cep:str):
+def buscar_remedio_cep(cep:str, produto:str):
     print(f"Buscando Mounjaro para o CEP:{cep}")
     
     resultados_farma = []
 
     for checar_farmacia in farmacias_checkers:
         try:
-            resultado = checar_farmacia(cep)
+            resultado = checar_farmacia(cep, produto)
             if resultado:
                 result_form = formatar_resultado(resultado)
                 resultados_farma.append(result_form)
