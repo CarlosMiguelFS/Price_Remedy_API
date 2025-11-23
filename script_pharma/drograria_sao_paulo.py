@@ -1,6 +1,5 @@
-import httpx
-
-def check_drogaria_sao_paulo(cep, produto):
+def check_drogaria_sao_paulo(cep,produto):
+    import httpx
     d_para = {
         "Mounjaro 2,5mg/ml": "887528",
         "Mounjaro 5mg/ml": "887455",
@@ -8,38 +7,27 @@ def check_drogaria_sao_paulo(cep, produto):
         "Mounjaro 10mg/ml": "888060"
     }
 
-    prod_id = d_para.get(produto.strip())
-    if not prod_id: return None
-
-    # Header simples que funcionou no seu teste
-    headers = {
-        "User-Agent": "Mozilla/5.0",
-        "Accept": "application/json"
-    }
-
     payload = {
-        "items": [{"id": prod_id, "quantity": 1, "seller": "1"}],
-        "country": "BRA",
-        "postalCode": cep
+        "items":[
+            {
+                "id":d_para[produto.strip()],
+                "quantity":1,
+                "seller":"1"
+            }
+        ],
+        "country":"BRA",
+        "postalCode":f"{cep}"
     }
 
-    try:
-        response = httpx.post(
-            "https://www.drogariasaopaulo.com.br/api/checkout/pub/orderforms/simulation", 
-            json=payload, 
-            headers=headers, 
-            timeout=15
-        )
-        response.raise_for_status()
-        
-        endereco = response.json()
+    headers = {"User-Agent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/139.0.0.0 Safari/537.36 OPR/123.0.0.0"}
+    endereco = httpx.post("https://www.drogariasaopaulo.com.br/api/checkout/pub/orderforms/simulation", json=payload, headers=headers).json()
 
-        for values in endereco.get("pickupPoints", []):
-            if values.get("address"):
-                return {"loja": "Drogaria São Paulo", "endereco": dict(values["address"])} 
 
-    except Exception as e:
-        print(f"Erro Drogaria SP: {e}")
-        pass
+    for values in endereco.get("pickupPoints",[]):
+        if values.get("address"):
+            return {"loja": "Drogaria São Paulo", "endereco": dict(values["address"])} 
 
     return None
+
+
+print(check_drogaria_sao_paulo("04010-200","Mounjaro 10mg/ml" ))
