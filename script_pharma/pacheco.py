@@ -4,10 +4,10 @@ def check_pacheco(cep,produto):
     
 
     d_para = {
-        "Mounjaro Tirzepatida 2,5mg/ml 0,5ml Injetável":"887528",
-        "Mounjaro Tirzepatida 5mg/ml 0,5ml Injetável":"887455",
-        "Mounjaro Tirzepatida 7,5mg/ml 0,5ml Injetável":"887951",
-        "Mounjaro Tirzepatida 10mg/ml 0,5ml Injetável":"888060"
+        "Mounjaro 2,5mg/ml": "887528",
+        "Mounjaro 5mg/ml": "887455",
+        "Mounjaro 7,5mg/ml": "887951",
+        "Mounjaro 10mg/ml": "888060"
     }
 
     product_description = {}

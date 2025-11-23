@@ -3,10 +3,10 @@ def check_pague_menos(cep,produto):
     # Removido product_description = {} pois não é mais usado
 
     d_para = {
-        "Mounjaro Tirzepatida 5mg/ml 0,5ml Injetável":"166503",
-        "Mounjaro Tirzepatida 2,5mg/ml 0,5ml Injetável":"166502",
-        "Mounjaro Tirzepatida 7,5mg/ml 0,5ml Injetável":"166507",
-        "Mounjaro Tirzepatida 10mg/ml 0,5ml Injetável":"166506"
+        "Mounjaro 2,5mg/ml": "166502",
+        "Mounjaro 5mg/ml": "166503",
+        "Mounjaro 7,5mg/ml": "166507",
+        "Mounjaro 10mg/ml": "166506"
     }
 
     payload = {

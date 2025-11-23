@@ -4,10 +4,10 @@ import httpx
 def check_drogasil(cep, produto):
     
     d_para = {
-        "Mounjaro Tirzepatida 2,5mg/ml 0,5ml Injetável":"1272170",
-        "Mounjaro Tirzepatida 5mg/ml 0,5ml Injetável":"1272173",
-        "Mounjaro Tirzepatida 7,5mg/ml 0,5ml Injetável":"1272174",
-        "Mounjaro Tirzepatida 10mg/ml 0,5ml Injetável":"1272177"
+        "Mounjaro 2,5mg/ml": "1272170",
+        "Mounjaro 5mg/ml": "1272173",
+        "Mounjaro 7,5mg/ml": "1272174",
+        "Mounjaro 10mg/ml": "1272177"
     }
     
     url_drogasil = "https://www.drogasil.com.br/api/next/product-hub/graphql"
