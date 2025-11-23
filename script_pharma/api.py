@@ -84,6 +84,7 @@ def buscar_remedio_cep(cep:str, produto:str):
     for checar_farmacia in farmacias_checkers:
         try:
             resultado = checar_farmacia(cep, produto)
+            print(resultado)
             if resultado:
                 result_form = formatar_resultado(resultado)
                 resultados_farma.append(result_form)

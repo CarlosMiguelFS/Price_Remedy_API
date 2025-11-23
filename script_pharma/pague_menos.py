@@ -1,7 +1,6 @@
-def check_pague_menos(cep,produto):
-    import httpx
-    # Removido product_description = {} pois não é mais usado
+import httpx
 
+def check_pague_menos(cep, produto):
     d_para = {
         "Mounjaro 2,5mg/ml": "166502",
         "Mounjaro 5mg/ml": "166503",
@@ -9,25 +8,40 @@ def check_pague_menos(cep,produto):
         "Mounjaro 10mg/ml": "166506"
     }
 
-    payload = {
-        "items":[
-            {
-                "id":d_para[produto.strip()],
-                "quantity":1,
-                "seller":"1"
-            }
-        ],
-        "country":"BRA",
-        "postalCode":f"{cep}"
+    prod_id = d_para.get(produto.strip())
+    if not prod_id: return None
+
+    # Header simples que funcionou no seu teste
+    headers = {
+        "User-Agent": "Mozilla/5.0",
+        "Accept": "application/json"
     }
 
-    headers = {"User-Agent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/139.0.0.0 Safari/537.36 OPR/123.0.0.0"}
-    endereco = httpx.post("https://www.paguemenos.com.br/api/checkout/pub/orderForms/simulation", json=payload, headers=headers).json()
+    payload = {
+        "items": [{"id": prod_id, "quantity": 1, "seller": "1"}],
+        "country": "BRA",
+        "postalCode": cep
+    }
+
+    try:
+        response = httpx.post(
+            "https://www.paguemenos.com.br/api/checkout/pub/orderForms/simulation", 
+            json=payload, 
+            headers=headers, 
+            timeout=15
+        )
+        # Se der erro 403/500, vai pular pro except agora
+        response.raise_for_status()
+        
+        endereco = response.json()
     
-    # Lógica de retorno corrigida:
-    for values in endereco.get("pickupPoints",[]):
-        # Retorna o primeiro endereço encontrado
-        if values.get("address"):
-            return {"loja": "Pague Menos", "endereco": dict(values["address"])} 
+        for values in endereco.get("pickupPoints", []):
+            if values.get("address"):
+                return {"loja": "Pague Menos", "endereco": dict(values["address"])} 
+
+    except Exception as e:
+        # Isso vai aparecer no log do uvicorn se der erro, ajudando a debugar
+        print(f"Erro Pague Menos: {e}")
+        pass
 
     return None
