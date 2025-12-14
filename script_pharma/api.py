@@ -15,7 +15,7 @@ origins = [
     "https://medradar-dnhsdsop.manus.space",
     "https://lovable.dev/projects/7dbf5259-3626-42d5-8b98-22dd3c29409d",
     "https://app-9a8765fc-728b-4155-b95f-496f84e6f469.base44.app",
-    "med-radar.base44.app",
+    "https://med-radar.base44.app",
     "http://localhost:3000",
 ]
 
