@@ -15,6 +15,7 @@ origins = [
     "https://medradar-dnhsdsop.manus.space",
     "https://lovable.dev/projects/7dbf5259-3626-42d5-8b98-22dd3c29409d",
     "https://app-9a8765fc-728b-4155-b95f-496f84e6f469.base44.app",
+    "med-radar.base44.app",
     "http://localhost:3000",
 ]
 
@@ -84,7 +85,6 @@ def buscar_remedio_cep(cep:str, produto:str):
     for checar_farmacia in farmacias_checkers:
         try:
             resultado = checar_farmacia(cep, produto)
-            print(resultado)
             if resultado:
                 result_form = formatar_resultado(resultado)
                 resultados_farma.append(result_form)

@@ -7,7 +7,13 @@ def check_drogasil(cep, produto):
         "Mounjaro 2,5mg/ml": "1272170",
         "Mounjaro 5mg/ml": "1272173",
         "Mounjaro 7,5mg/ml": "1272174",
-        "Mounjaro 10mg/ml": "1272177"
+        "Mounjaro 10mg/ml": "1272177",
+        "Ritalina 10mg 30 comprimidos":"1559",
+        "Ritalina 10mg 60 comprimidos":"10675",
+        "Ritalina LA 10mg":"37153",
+        "Ritalina LA 30mg":"97778",
+        "Ritalina LA 40mg":"11613",
+        "Ritalina LA 20mg":"31770"
     }
     
     url_drogasil = "https://www.drogasil.com.br/api/next/product-hub/graphql"

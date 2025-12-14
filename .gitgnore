@@ -11,6 +11,7 @@ __pycache__/
 *.xlsx
 *.json
 *.ini
+*.env
 
 # Apenas estes arquivos não são ignorados
 !requirements.txt
