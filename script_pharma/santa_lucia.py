@@ -1,8 +1,10 @@
 from crawler_settings import Crawler
 
-def check_santa_lucia(cep):
+def check_santa_lucia(cep,produto):
     
-    # id_produto = "1022832"
+    d_para ={
+    "1022832"    
+    } 
     #Ritalina
     
 

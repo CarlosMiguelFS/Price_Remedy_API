@@ -9,6 +9,20 @@ def check_pacheco(cep,produto):
         "Mounjaro 7,5mg/ml": "887951",
         "Mounjaro 10mg/ml": "888060"
     }
+    d_para_link = {
+        "Mounjaro 2,5mg/ml": "https://www.drogariaspacheco.com.br/mounjaro-25mg-solucao-injetavel--subcutanea-4-seringa-pree-eli-lilly/p",
+        "Mounjaro 5mg/ml": "https://www.drogariaspacheco.com.br/mounjaro-5mg-eli-lilly-4-seringa-preenchida-0-5ml-solucao-injetavel-subcutaneo-4-canetas/p",
+        "Mounjaro 7,5mg/ml": "https://www.drogariaspacheco.com.br/mounjaro-7-5mg-eli-lilly-4-seringa-0-5ml-solucao-injetavel-subcutaneo-4-canetas/p",
+        "Mounjaro 10mg/ml": "https://www.drogariaspacheco.com.br/mounjaro-10mg-eli-lilly-4-seringa-0-5ml-solucao-injetavel-subcutaneo-4-canetas/p",
+        "Mounjaro 12,5mg/ml":"https://www.drogariaspacheco.com.br/mounjaro-15mg-eli-lilly-4-seringa-0-5ml-solucao-injetavel-subcutaneo-4-canetas/p",
+        "Mounjaro 15mg/ml":"https://www.drogariaspacheco.com.br/mounjaro-12-5mg-eli-lilly-4-seringa-0-5ml-solucao-injetavel-subcutaneo-4-canetas/p",
+        "Ritalina 10mg 30 comprimidos":"https://www.drogariaspacheco.com.br/ritalina-10mg-30-comprimidos/p",
+        "Ritalina 10mg 60 comprimidos":"https://www.drogariaspacheco.com.br/ritalina-10mg-novartis-biociencias-60-comprimidos/p",
+        "Ritalina LA 10mg":"https://www.drogariaspacheco.com.br/ritalina-la-10mg-novatis-30-comprimidos/p",
+        "Ritalina LA 20mg":"https://www.drogariaspacheco.com.br/ritalina-la-20mg-novartis-biociencias-30-comprimidos/p",
+        "Ritalina LA 30mg":"https://www.drogariaspacheco.com.br/ritalina-la-30mg-novartis-biociencias-30-comprimidos/p",
+        "Ritalina LA 40mg":"https://www.drogariaspacheco.com.br/ritalina-la-40mg-novartis-biociencias-30-comprimidos/p",
+    }
 
     product_description = {}
     url_pharm = "https://www.drogariaspacheco.com.br/api/checkout/pub/orderforms/simulation"
@@ -36,6 +50,7 @@ def check_pacheco(cep,produto):
                 product_description["endereco"] = product["pickupStoreInfo"]["address"]  
                 product_description["value"] = float(resp_frete["items"][0]["price"]/100)
                 product_description["loja"] = "Pacheco"
+                product_description["url"] = d_para_link[produto]
                 return product_description
     
     return None

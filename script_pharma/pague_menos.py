@@ -6,7 +6,25 @@ def check_pague_menos(cep,produto):
         "Mounjaro 2,5mg/ml": "166502",
         "Mounjaro 5mg/ml": "166503",
         "Mounjaro 7,5mg/ml": "166507",
-        "Mounjaro 10mg/ml": "166506"
+        "Mounjaro 10mg/ml": "166506",
+        "Ritalina 10mg 60 Comprimidos":"28971",
+        "Ritalina 10mg com 30 Comprimidos":"44726",
+        "Ritalina LA 10mg/ml":"34493",
+        "Ritalina LA 20mg/ml":"24172",
+        "Ritalina LA 40mg/ml":"24173",
+        "Ritalina LA 30mg/ml":"24174"
+    }
+    d_para_link = {
+        "Mounjaro 2,5mg/ml": "https://www.paguemenos.com.br/mounjaro-2-5mg-com-4-seringas/p",
+        "Mounjaro 5mg/ml": "https://www.paguemenos.com.br/mounjaro-5mg-com-4-seringas/p",
+        "Mounjaro 7,5mg/ml": "https://www.paguemenos.com.br/mounjaro-7-5mg-com-4-seringas/p",
+        "Mounjaro 10mg/ml": "https://www.paguemenos.com.br/mounjaro-10mg-com-4-seringas/p",
+        "Ritalina 10mg 60 Comprimidos":"https://www.paguemenos.com.br/ritalina-10mg-comprimidos60-p/p",
+        "Ritalina 10mg com 30 Comprimidos":"https://www.paguemenos.com.br/ritalina-10mg-com-30-comprimidos-p-a3/p",
+        "Ritalina LA 10mg/ml":"https://www.paguemenos.com.br/ritalina-la-10mg-com-30-comprimidos-p/p",
+        "Ritalina LA 20mg/ml":"https://www.paguemenos.com.br/ritalina-la-20mg-comprimidos30-p/p",
+        "Ritalina LA 40mg/ml":"https://www.paguemenos.com.br/ritalina-la-40mg-comprimidos30-p/p",
+        "Ritalina LA 30mg/ml":"https://www.paguemenos.com.br/ritalina-la-30mg-comprimidos30-p/p"
     }
 
     payload = {
@@ -28,6 +46,6 @@ def check_pague_menos(cep,produto):
     for values in endereco.get("pickupPoints",[]):
         # Retorna o primeiro endereço encontrado
         if values.get("address"):
-            return {"loja": "Pague Menos", "endereco": dict(values["address"])} 
+            return {"loja": "Pague Menos", "endereco": dict(values["address"]), "url":d_para_link[produto]} 
 
     return None

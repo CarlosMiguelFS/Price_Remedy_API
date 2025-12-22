@@ -33,7 +33,7 @@ farmacias_checkers = [
     check_pacheco,
     check_indiana,
     check_pague_menos,
-    check_drogaria_sao_paulo
+    # check_drogaria_sao_paulo
 ]
 
 
@@ -69,6 +69,7 @@ def formatar_resultado(res):
         estado = endereco.get('state', '')
 
     return {
+        "url": res.get('url'),
         "loja": res.get('loja'),
         "endereco_formatado": f"{rua}, {num}",
         "rua": rua,
