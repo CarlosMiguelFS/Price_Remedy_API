@@ -93,7 +93,7 @@ def buscar_remedio_cep(cep:str, produto:str):
     
     if not resultados_farma:
         return {"menssagem": "Produto não encontrado em nenhuma farmacia"}
-    
+    print(resultados_farma)
     return {"resultados": resultados_farma}
 
 if __name__ == "__main__":
