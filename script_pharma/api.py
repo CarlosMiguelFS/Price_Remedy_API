@@ -17,7 +17,8 @@ origins = [
     "https://app-9a8765fc-728b-4155-b95f-496f84e6f469.base44.app",
     "https://med-radar.base44.app",
     "http://localhost:3000",
-    "https://radar-meds.lovable.app"
+    "https://radar-meds.lovable.app",
+    "https://app.base44.com/apps/69190e47002195fa7c0dd7ec/editor/preview/Home"
 ]
 
 app.add_middleware(
