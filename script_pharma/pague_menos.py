@@ -26,6 +26,13 @@ def check_pague_menos(cep,produto):
         "Ritalina LA 40mg/ml":"https://www.paguemenos.com.br/ritalina-la-40mg-comprimidos30-p/p",
         "Ritalina LA 30mg/ml":"https://www.paguemenos.com.br/ritalina-la-30mg-comprimidos30-p/p"
     }
+    url_price = f"https://www.paguemenos.com.br/api/catalog_system/pub/products/search?fq=skuId:{d_para[produto]}"
+
+    resp_price = httpx.get(url_price).json()
+    standard_price  = resp_price[0]["items"][0]["sellers"][0]["commertialOffer"]["ListPrice"]
+    best_price  = resp_price[0]["items"][0]["sellers"][0]["commertialOffer"]["Price"]
+
+    percentage_price = ((standard_price - best_price) / standard_price) * 100
 
     payload = {
         "items":[
@@ -46,6 +53,8 @@ def check_pague_menos(cep,produto):
     for values in endereco.get("pickupPoints",[]):
         # Retorna o primeiro endereço encontrado
         if values.get("address"):
-            return {"loja": "Pague Menos", "endereco": dict(values["address"]), "url":d_para_link[produto]} 
+            return {"loja": "Pague Menos", "endereco": dict(values["address"]), "url":d_para_link[produto], "melhor_preco" : round(best_price, 2), "preco_padrao":round(standard_price, 2),"porcentagem_diferenca":round(percentage_price, 2) } 
 
     return None
+
+print(check_pague_menos("29161-716","Ritalina LA 10mg/ml"))

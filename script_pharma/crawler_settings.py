@@ -29,12 +29,13 @@ class Crawler:
 
         url_freight = url_trat.replace("{base64}", base64_str) 
         response_freight = httpx.get(url_freight, headers=headers).json()
-
         if "SANTA_LUCIA" == pharmacy or "PAGUE_MENOS" == pharmacy:
             slas = response_freight.get("data", {}).get("shipping", {}).get("logisticsInfo", [{}])[0].get("slas", [])
             for frete in slas:
                 if frete.get("pickupStoreInfo", {}).get("address"):
                     return frete["pickupStoreInfo"]["address"]
+                if "Retirada" in frete.get("id", ""):
+                    return frete.get("friendlyName")
             
         elif "INDIANA" == pharmacy:
             options = response_freight.get("data", {}).get("shippingSLA", {}).get("pickupOptions", [])
