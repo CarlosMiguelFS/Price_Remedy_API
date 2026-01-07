@@ -67,47 +67,47 @@ def check_drogasil(cep, produto):
         "User-Agent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/142.0.0.0 Safari/537.36"
     }
 
-    try:
-        resp_price = httpx.post(url_drogasil, json=json_price, headers=headers).json()
+    # try:
+    resp_price = httpx.post(url_drogasil, json=json_price, headers=headers).json()
 
-        # Melhor valor pos desconto
-        data_price = resp_price.get("data", {}).get("priceBySku", {})
-        if not data_price:
-            return None
-
-        standard_price = float(data_price["domains"]["price"]["value"])
-        
-        if data_price.get("bestPriceHierarchy"):
-            best_price = float(data_price["bestPriceHierarchy"][0]["value"])
-        else:
-            best_price = standard_price
-
-        percentage_price = ((standard_price - best_price) / standard_price) * 100
-
-        product_description["melhor_preco"] = best_price
-        product_description["preco_padrao"] = standard_price
-        product_description["porcentagem_diferenca"] = percentage_price
-
-        resp_freight = httpx.post(url_drogasil, json=json_freight, headers=headers).json()
-        
-        data_freight = resp_freight.get("data")
-
-        if data_freight and data_freight.get("getNearbyStockByZipCode"):
-            for descriptions in data_freight["getNearbyStockByZipCode"]:
-                # Pequena proteção no stocks[0] pra não quebrar se vier lista vazia
-                stocks = descriptions.get("stocks", [])
-                if stocks and stocks[0].get("quantity", 0) > 0:
-                    product_description["estoque"] = int(stocks[0]["quantity"])
-                    product_description["disponibilidade"] = dict(descriptions["branch"]["address"])
-                    product_description["loja"] = "Drogasil"
-                    
-                    # 3. AQUI ERA O ERRO: Usei chave_produto (com strip) para pegar o link
-                    product_description["url"] = d_para_link.get(chave_produto, "")
-                    return product_description
-    except Exception as e:
-        print(f"Erro Drogasil: {e}")
+    # Melhor valor pos desconto
+    data_price = resp_price.get("data", {}).get("priceBySku", {})
+    if not data_price:
         return None
+
+    standard_price = float(data_price["domains"]["price"]["value"])
+    
+    if data_price.get("bestPriceHierarchy"):
+        best_price = float(data_price["bestPriceHierarchy"][0]["value"])
+    else:
+        best_price = standard_price
+
+    percentage_price = ((standard_price - best_price) / standard_price) * 100
+
+    product_description["melhor_preco"] = best_price
+    product_description["preco_padrao"] = standard_price
+    product_description["porcentagem_diferenca"] = percentage_price
+
+    resp_freight = httpx.post(url_drogasil, json=json_freight, headers=headers).json()
+    
+    data_freight = resp_freight.get("data")
+
+    if data_freight and data_freight.get("getNearbyStockByZipCode"):
+        for descriptions in data_freight["getNearbyStockByZipCode"]:
+            # Pequena proteção no stocks[0] pra não quebrar se vier lista vazia
+            stocks = descriptions.get("stocks", [])
+            if stocks:
+                product_description["estoque"] = int(stocks[0]["quantity"])
+                product_description["disponibilidade"] = dict(descriptions["branch"]["address"])
+                product_description["loja"] = "Drogasil"
+                
+                # 3. AQUI ERA O ERRO: Usei chave_produto (com strip) para pegar o link
+                product_description["url"] = d_para_link.get(chave_produto, "")
+                return product_description
+    # except Exception as e:
+    #     print(f"Erro Drogasil: {e}")
+    #     return None
     
     return None
 
-print(check_drogasil("29161-716","Mounjaro 5mg/ml"))
+print(check_drogasil("29161-716","Mounjaro 10mg/ml"))
