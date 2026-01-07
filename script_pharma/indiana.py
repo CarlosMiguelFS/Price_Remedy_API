@@ -38,7 +38,6 @@ def check_indiana(cep, produto):
 
     resp_price = httpx.post(url_price, headers=headers,json=json_price).json()
     best_price = resp_price["items"][0]["price"]
-
     endereco = Crawler.requests_pattern_freight(cep, d_para[produto.strip()], url, "INDIANA") 
     if endereco:
         return {"loja": "Indiana", "disponibilidade": endereco.replace("Retire na loja - ", ""),"url":d_para_link[produto], "melhor_preco":best_price/100}

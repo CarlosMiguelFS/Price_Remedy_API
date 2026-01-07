@@ -1,7 +1,9 @@
-import requests
 import httpx
 
 def check_drogasil(cep, produto):
+    
+    # 1. Definimos a chave limpa logo no começo
+    chave_produto = produto.strip()
     
     d_para = {
         "Mounjaro 2,5mg/ml": "1272170",
@@ -33,25 +35,26 @@ def check_drogasil(cep, produto):
 
     product_description = {}
 
+    # 2. Uso chave_produto aqui
+    if chave_produto not in d_para:
+        return None
 
     json_price = {
         "operationName": "PriceBySku",
         "variables": {
-            "sku": d_para[produto.strip()]
+            "sku": d_para[chave_produto]
         },
-        "query": "query PriceBySku($sku: String!) {\n  priceBySku(sku: $sku) {\n    sku\n    isInStock\n    domains {\n      price {\n        rangeId\n        value\n        discountTypeId\n        inHierarchy\n        __typename\n      }\n      lmpm {\n        simplePercent\n        percent\n        productType {\n          id\n          description\n          productCode\n          __typename\n        }\n        discountValue\n        inHierarchy\n        priceValue\n        percentLimit\n        cuttingAmount\n        markup {\n          id\n          auxDescription\n          description\n          __typename\n        }\n        discountType {\n          id\n          description\n          __typename\n        }\n        groupType {\n          id\n          description\n          __typename\n        }\n        discountTypeId\n        __typename\n      }\n      offer {\n        exclusiveOffers {\n          campaign {\n            actionCode\n            messageCode\n            offerCode\n            offerPoolCode\n            sectionCode\n            actionDescription\n            detailedDescription\n            messageDescription\n            offerDescription\n            __typename\n          }\n          webSectionCode\n          aggregatedCustomCampaignCode\n          lmpmMarkupId\n          discountTypeId\n          promotionalNumber\n          discountPercentage\n          internetDiscountPercentage\n          maximumQuantity\n          minimumQuantity\n          productQuantity\n          discountValue\n          value\n          activeDigital\n          combinedProductCode\n          activationChannel\n          categories {\n            groupCode\n            aggregatedCustomCampaignCode\n            brandCode\n            categoryCode\n            __typename\n          }\n          minimumValue\n          stateAbbreviation\n          inHierarchy\n          __typename\n        }\n        offers {\n          offerId\n          description\n          percent\n          value\n          discountValue\n          rangeId\n          discountTypeId\n          inHierarchy\n          __typename\n        }\n        __typename\n      }\n      card {\n        main {\n          cardId\n          customerGroupId\n          type\n          cardType\n          description\n          percent\n          priceValue\n          discountTypeId\n          inHierarchy\n          __typename\n        }\n        cards {\n          cardId\n          customerGroupId\n          type\n          cardType\n          description\n          percent\n          priceValue\n          discountTypeId\n          inHierarchy\n          __typename\n        }\n        __typename\n      }\n      univers {\n        beneficiaryLegacyId\n        digitalOption\n        contractName\n        priority\n        cards {\n          cardNumber\n          type\n          __typename\n        }\n        productClassification\n        bestDiscount {\n          typeDiscount\n          percentage\n          value\n          discountValue\n          __typename\n        }\n        discountTypeId\n        inHierarchy\n        __typename\n      }\n      pbm {\n        pbmId\n        group\n        ean\n        doctorData\n        discountTypeId\n        offers {\n          informativeMessage\n          quantity\n          quantityFrom\n          quantityTo\n          operator\n          discountType\n          discountTypeValue\n          discountValue\n          value\n          discount\n          originalValue\n          percent\n          pointing\n          inHierarchy\n          __typename\n        }\n        offerTypes {\n          combo {\n            product {\n              sku\n              name\n              isInStock\n              isGift\n              quantityFrom\n              quantityTo\n              operator\n              discountType\n              discountTypeValue\n              discountPercent\n              discountValue\n              totalPrice\n              __typename\n            }\n            auxiliaryProduct {\n              sku\n              name\n              isInStock\n              isGift\n              quantityFrom\n              quantityTo\n              operator\n              discountType\n              discountTypeValue\n              discountPercent\n              discountValue\n              totalPrice\n              __typename\n            }\n            __typename\n          }\n          lmpm {\n            offers {\n              offerId\n              quantityFrom\n              quantityTo\n              operator\n              discountType\n              discountTypeValue\n              discountPercent\n              discountValue\n              totalPrice\n              point\n              __typename\n            }\n            __typename\n          }\n          __typename\n        }\n        __typename\n      }\n      paymentDiscounts {\n        paymentMethodId\n        paymentMethodDescription\n        discountPercent\n        discountPercentCalculated\n        discountValue\n        totalPrice\n        discountTypeId\n        discountType\n        __typename\n      }\n      __typename\n    }\n    bestPriceHierarchy {\n      hierarchy\n      discount {\n        type\n        percent\n        value\n        domain\n        __typename\n      }\n      value\n      description\n      discountTypeId\n      installments {\n        installment\n        value\n        __typename\n      }\n      __typename\n    }\n    __typename\n  }\n}"
+        "query": "query PriceBySku($sku: String!) {\n  priceBySku(sku: $sku) {\n    sku\n    isInStock\n    domains {\n      price {\n        rangeId\n        value\n        discountTypeId\n        inHierarchy\n        __typename\n      }\n      __typename\n    }\n    bestPriceHierarchy {\n      hierarchy\n      discount {\n        type\n        percent\n        value\n        domain\n        __typename\n      }\n      value\n      description\n      discountTypeId\n      installments {\n        installment\n        value\n        __typename\n      }\n      __typename\n    }\n    __typename\n  }\n}"
     }
 
-
-
-
+    # Mantive o seu payload exato (com string "3")
     json_freight={
         "operationName":"GET_STOCK",
         "variables":{
             "zipcode":cep.replace("-",""),
             "products":[
                 {
-                    "sku":d_para[produto.strip()],
+                    "sku":d_para[chave_produto],
                     "quantity":1
                 }
             ],
@@ -63,30 +66,48 @@ def check_drogasil(cep, produto):
     headers = {
         "User-Agent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/142.0.0.0 Safari/537.36"
     }
-    resp_price = httpx.post(url_drogasil, json=json_price, headers=headers).json()
 
-    # Melhor valor pos desconto
-    best_price = float(resp_price["data"]["priceBySku"]["bestPriceHierarchy"][0]["value"])
-    standard_price = float(resp_price["data"]["priceBySku"]["domains"]["price"]["value"])
+    try:
+        resp_price = httpx.post(url_drogasil, json=json_price, headers=headers).json()
 
-    percentage_price = ((standard_price - best_price) / standard_price) * 100
+        # Melhor valor pos desconto
+        data_price = resp_price.get("data", {}).get("priceBySku", {})
+        if not data_price:
+            return None
 
-    product_description["melhor_preco"] = best_price
-    product_description["preco_padrao"] = standard_price
-    product_description["porcentagem_diferenca"] = percentage_price
+        standard_price = float(data_price["domains"]["price"]["value"])
+        
+        if data_price.get("bestPriceHierarchy"):
+            best_price = float(data_price["bestPriceHierarchy"][0]["value"])
+        else:
+            best_price = standard_price
 
-    resp_freight = httpx.post(url_drogasil, json=json_freight, headers=headers).json()
-    
-    data_freight = resp_freight.get("data")
+        percentage_price = ((standard_price - best_price) / standard_price) * 100
 
-    if data_freight and data_freight.get("getNearbyStockByZipCode"):
-        for descriptions in data_freight["getNearbyStockByZipCode"]:
-            if descriptions.get("stocks") and descriptions["stocks"][0].get("quantity", 0) > 0:
-                product_description["estoque"] = int(descriptions["stocks"][0]["quantity"])
-                product_description["disponibilidade"] = dict(descriptions["branch"]["address"])
-                product_description["loja"] = "Drogasil"
-                product_description["url"] = d_para_link[produto]
-                return product_description
+        product_description["melhor_preco"] = best_price
+        product_description["preco_padrao"] = standard_price
+        product_description["porcentagem_diferenca"] = percentage_price
+
+        resp_freight = httpx.post(url_drogasil, json=json_freight, headers=headers).json()
+        
+        data_freight = resp_freight.get("data")
+
+        if data_freight and data_freight.get("getNearbyStockByZipCode"):
+            for descriptions in data_freight["getNearbyStockByZipCode"]:
+                # Pequena proteção no stocks[0] pra não quebrar se vier lista vazia
+                stocks = descriptions.get("stocks", [])
+                if stocks and stocks[0].get("quantity", 0) > 0:
+                    product_description["estoque"] = int(stocks[0]["quantity"])
+                    product_description["disponibilidade"] = dict(descriptions["branch"]["address"])
+                    product_description["loja"] = "Drogasil"
+                    
+                    # 3. AQUI ERA O ERRO: Usei chave_produto (com strip) para pegar o link
+                    product_description["url"] = d_para_link.get(chave_produto, "")
+                    return product_description
+    except Exception as e:
+        print(f"Erro Drogasil: {e}")
+        return None
     
     return None
 
+print(check_drogasil("29161-716","Mounjaro 5mg/ml"))
