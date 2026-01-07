@@ -1,14 +1,15 @@
 from fastapi import FastAPI
 import uvicorn
-
 from fastapi.middleware.cors import CORSMiddleware
+
+# Certifique-se que os nomes dos arquivos importados estao corretos na sua pasta
 from drograsil import check_drogasil
 from pacheco import check_pacheco
 from indiana import check_indiana
 from pague_menos import check_pague_menos
 from drograria_sao_paulo import check_drogaria_sao_paulo
 
-app= FastAPI()
+app = FastAPI()
 
 origins = [
     "https://3000-i9ej1of031jvjmrchzi0z-c6ad99b1.manus.computer",
@@ -37,51 +38,47 @@ farmacias_checkers = [
     # check_drogaria_sao_paulo
 ]
 
-
 def formatar_resultado(res):
-    """
-    Recebe o dicionário bruto da farmácia e retorna
-    um dicionário limpo e formatado.
-    """
-
     endereco = res.get('disponibilidade') or res.get('endereco')
+    
+    dict_endereco = {
+        "rua": "", "numero": "", "bairro": "", "cidade": "", "estado": "", "endereco_formatado": str(endereco)
+    }
 
-    if not isinstance(endereco, dict):
-        return {
-            "loja": res.get('loja'),
-            "endereco_formatado": str(endereco),
-            "rua": "",
-            "numero": "",
-            "bairro": "",
-            "cidade": "",
-            "estado": ""
-        }
-    if 'addressLocal' in endereco:
-        rua = endereco.get('addressLocal', '')
-        num = endereco.get('addressNumber', '')
-        bairro = endereco.get('district', '')
-        cidade = endereco.get('city', '')
-        estado = endereco.get('sgState', '')
-    else:
-        rua = endereco.get('street', '')
-        num = endereco.get('number', '')
-        bairro = endereco.get('neighborhood', '')
-        cidade = endereco.get('city', '')
-        estado = endereco.get('state', '')
+    if isinstance(endereco, dict):
+        if 'addressLocal' in endereco:
+            dict_endereco["rua"] = endereco.get('addressLocal', '')
+            dict_endereco["numero"] = endereco.get('addressNumber', '')
+            dict_endereco["bairro"] = endereco.get('district', '')
+            dict_endereco["cidade"] = endereco.get('city', '')
+            dict_endereco["estado"] = endereco.get('sgState', '')
+        else:
+            dict_endereco["rua"] = endereco.get('street', '')
+            dict_endereco["numero"] = endereco.get('number', '')
+            dict_endereco["bairro"] = endereco.get('neighborhood', '')
+            dict_endereco["cidade"] = endereco.get('city', '')
+            dict_endereco["estado"] = endereco.get('state', '')
+        
+        dict_endereco["endereco_formatado"] = f"{dict_endereco['rua']}, {dict_endereco['numero']}"
 
     return {
-        "url": res.get('url'),
         "loja": res.get('loja'),
-        "endereco_formatado": f"{rua}, {num}",
-        "rua": rua,
-        "numero": num,
-        "bairro": bairro,
-        "cidade": cidade,
-        "estado": estado
+        "url": res.get('url'),
+        "melhor_preco": res.get('melhor_preco'),
+        "preco_padrao": res.get('preco_padrao'),
+        "porcentagem_diferenca": res.get('porcentagem_diferenca'),
+        "estoque": res.get('estoque'),
+        "endereco_formatado": dict_endereco["endereco_formatado"],
+        "rua": dict_endereco["rua"],
+        "numero": dict_endereco["numero"],
+        "bairro": dict_endereco["bairro"],
+        "cidade": dict_endereco["cidade"],
+        "estado": dict_endereco["estado"]
     }
+
 @app.get("/buscar/{cep}")
 def buscar_remedio_cep(cep:str, produto:str):
-    print(f"Buscando Mounjaro para o CEP:{cep}")
+    print(f"Buscando {produto} para o CEP:{cep}")
     
     resultados_farma = []
 
@@ -95,7 +92,7 @@ def buscar_remedio_cep(cep:str, produto:str):
             print(f"Checar o Erro da farmacia {checar_farmacia.__name__}, erro {e}")
     
     if not resultados_farma:
-        return{"menssagem":"Produto não encontrado em nenhuma farmacia"}
+        return {"menssagem": "Produto não encontrado em nenhuma farmacia"}
     
     return {"resultados": resultados_farma}
 
