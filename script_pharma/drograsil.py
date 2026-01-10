@@ -171,8 +171,3 @@ def check_drogasil(cep, produto):
 
     return None
 
-
-# =========================
-# TESTE
-# =========================
-print(check_drogasil("29161-716", "Mounjaro 5mg/ml"))

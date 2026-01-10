@@ -10,7 +10,6 @@ def check_indiana(cep, produto):
     d_para = {
         "Mounjaro 2,5mg/ml": "40221",
         "Mounjaro 5mg/ml": "40222",
-        # "Mounjaro 7,5mg/ml": "40222", # Atenção: Confirme se o ID de 7.5mg é esse mesmo, no seu arquivo original não tinha essa chave explicita ou estava repetida.
         "Mounjaro 10mg/ml": "40223",
         "Ritalina 10mg 60 comprimidos":"20489",
         "Ritalina 10mg 30 comprimidos":"79058",
@@ -20,27 +19,44 @@ def check_indiana(cep, produto):
         "Ritalina LA 30mg/ml":"17168"
     }
     d_para_link = {
-    "Mounjaro 2,5mg/ml": "https://www.farmaciaindiana.com.br/mounjaro-tirzepatida-2-5mg-ml-0-5ml-injetavel-4-canetas-aplicadoras/p",
-    "Mounjaro 5mg/ml": "https://www.farmaciaindiana.com.br/mounjaro-tirzepatida-5mg-ml-0-5ml-injetavel-4-canetas-aplicadoras/p",
-    # "Mounjaro 7,5mg/ml": "https://www.farmaciaindiana.com.br/mounjaro-tirzepatida-7-5mg-ml-0-5ml-injetavel-4-canetas-aplicadoras/p",
-    "Mounjaro 10mg/ml": "https://www.farmaciaindiana.com.br/mounjaro-tirzepatida-10mg-ml-0-5ml-injetavel-4-canetas-aplicadoras/p",
-    # "Mounjaro 12,5mg/ml":"https://www.farmaciaindiana.com.br/mounjaro-tirzepatida-12-5mg-ml-0-5ml-injetavel-4-canetas-aplicadoras/p",
-    # "Mounjaro 15mg/ml":"https://www.farmaciaindiana.com.br/mounjaro-tirzepatida-15mg-ml-0-5ml-injetavel-4-canetas-aplicadoras/p",
-    "Ritalina 10mg 60 comprimidos":"https://www.farmaciaindiana.com.br/ritalina-cloridrato-de-metilfenidato-10mg-60-comprimidos/p",
-    "Ritalina 10mg 30 comprimidos":"https://www.farmaciaindiana.com.br/ritalina-cloridrato-de-metilfenidato-10mg-30-comprimidos/p",
-    "Ritalina LA 10mg/ml":"https://www.farmaciaindiana.com.br/ritalina-la-cloridrato-de-metilfenidato-10mg-30-capsulas/p",
-    "Ritalina LA 40mg/ml":"https://www.farmaciaindiana.com.br/ritalina-la-cloridrato-de-metilfenidato-40mg-30-capsulas/p",
-    "Ritalina LA 20mg/ml":"https://www.farmaciaindiana.com.br/ritalina-la-cloridrato-de-metilfenidato-20mg-30-capsulas/p",
-    "Ritalina LA 30mg/ml":"https://www.farmaciaindiana.com.br/ritalina-la-cloridrato-de-metilfenidato-30mg-30-capsulas/p"
+        "Mounjaro 2,5mg/ml": "https://www.farmaciaindiana.com.br/mounjaro-tirzepatida-2-5mg-ml-0-5ml-injetavel-4-canetas-aplicadoras/p",
+        "Mounjaro 5mg/ml": "https://www.farmaciaindiana.com.br/mounjaro-tirzepatida-5mg-ml-0-5ml-injetavel-4-canetas-aplicadoras/p",
+        "Mounjaro 10mg/ml": "https://www.farmaciaindiana.com.br/mounjaro-tirzepatida-10mg-ml-0-5ml-injetavel-4-canetas-aplicadoras/p",
+        "Ritalina 10mg 60 comprimidos":"https://www.farmaciaindiana.com.br/ritalina-cloridrato-de-metilfenidato-10mg-60-comprimidos/p",
+        "Ritalina 10mg 30 comprimidos":"https://www.farmaciaindiana.com.br/ritalina-cloridrato-de-metilfenidato-10mg-30-comprimidos/p",
+        "Ritalina LA 10mg/ml":"https://www.farmaciaindiana.com.br/ritalina-la-cloridrato-de-metilfenidato-10mg-30-capsulas/p",
+        "Ritalina LA 40mg/ml":"https://www.farmaciaindiana.com.br/ritalina-la-cloridrato-de-metilfenidato-40mg-30-capsulas/p",
+        "Ritalina LA 20mg/ml":"https://www.farmaciaindiana.com.br/ritalina-la-cloridrato-de-metilfenidato-20mg-30-capsulas/p",
+        "Ritalina LA 30mg/ml":"https://www.farmaciaindiana.com.br/ritalina-la-cloridrato-de-metilfenidato-30mg-30-capsulas/p"
     }
 
-    json_price = {"clientProfileData":{"email":""},"items":[{"id":d_para[produto.strip()],"quantity":1,"seller":"1"}]}
+    chave_produto = produto.strip()
+    if chave_produto not in d_para:
+        return None
 
-    resp_price = httpx.post(url_price, headers=headers,json=json_price).json()
-    best_price = resp_price["items"][0]["price"]
-    endereco = Crawler.requests_pattern_freight(cep, d_para[produto.strip()], url, "INDIANA") 
-    if endereco:
-        return {"loja": "Indiana", "disponibilidade": endereco.replace("Retire na loja - ", ""),"url":d_para_link[produto], "melhor_preco":best_price/100}
+    json_price = {"clientProfileData":{"email":""},"items":[{"id":d_para[chave_produto],"quantity":1,"seller":"1"}]}
+
+    try:
+        resp_price = httpx.post(url_price, headers=headers, json=json_price).json()
+        
+        items = resp_price.get("items", [])
+        if not items:
+            print(f"Indiana: Nenhum item retornado para {chave_produto}")
+            return None
+            
+        best_price = items[0]["price"]
+        
+        endereco = Crawler.requests_pattern_freight(cep, d_para[chave_produto], url, "INDIANA") 
+        if endereco:
+            return {
+                "loja": "Indiana", 
+                "disponibilidade": endereco.replace("Retire na loja - ", ""),
+                "url": d_para_link.get(chave_produto, ""), 
+                "melhor_preco": best_price/100
+            }
+            
+    except Exception as e:
+        print(f"Erro interno Indiana: {e}")
+        return None
     
     return None
-
