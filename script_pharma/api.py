@@ -36,8 +36,8 @@ farmacias_checkers = [
     check_pacheco,
     check_indiana,
     check_pague_menos,
-    check_drogaraia
-    # check_drogaria_sao_paulo
+    check_drogaraia,
+    check_drogaria_sao_paulo
 ]
 
 def formatar_resultado(res):
