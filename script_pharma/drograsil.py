@@ -166,11 +166,11 @@ def check_drogasil(cep, produto):
                     has_raia = True
 
             if has_drogasil and has_raia:
-                loja_nome = "DROGASIL & RAIA"
+                loja_nome = "Drogasil & Raia"
             elif has_drogasil:
-                loja_nome = "DROGASIL"
+                loja_nome = "Drogasil"
             elif has_raia:
-                loja_nome = "RAIA"
+                loja_nome = "Raia"
             else:
                 loja_nome = "DESCONHECIDO"
 
