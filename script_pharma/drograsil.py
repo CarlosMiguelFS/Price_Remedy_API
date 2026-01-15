@@ -107,6 +107,9 @@ def check_drogasil(cep, produto):
           ) {
             branch {
               businessName
+              logoType {
+                description
+              }
               address {
                 district
                 addressLocal
@@ -128,8 +131,8 @@ def check_drogasil(cep, produto):
 
         headers = {
             "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) "
-                          "AppleWebKit/537.36 (KHTML, like Gecko) "
-                          "Chrome/142.0.0.0 Safari/537.36",
+            "AppleWebKit/537.36 (KHTML, like Gecko) "
+            "Chrome/142.0.0.0 Safari/537.36",
             "Accept": "application/json, text/plain, */*",
             "Content-Type": "application/json",
             "Origin": "https://www.drogasil.com.br",
@@ -152,6 +155,26 @@ def check_drogasil(cep, produto):
             resp_freight = client.post(url_drogasil, json=json_freight).json()
             data_freight = resp_freight.get("data", {}).get("getNearbyStockByZipCode", [])
 
+            has_drogasil = False
+            has_raia = False
+
+            for item_logo in data_freight:
+                logo = item_logo["branch"]["logoType"]["description"].upper()
+                if logo == "DROGASIL":
+                    has_drogasil = True
+                elif logo == "RAIA":
+                    has_raia = True
+
+            if has_drogasil and has_raia:
+                loja_nome = "DROGASIL & RAIA"
+            elif has_drogasil:
+                loja_nome = "DROGASIL"
+            elif has_raia:
+                loja_nome = "RAIA"
+            else:
+                loja_nome = "DESCONHECIDO"
+
+                
             for item in data_freight:
                 stocks = item.get("stocks", [])
                 if stocks and stocks[0]["quantity"] > 0:
@@ -161,7 +184,7 @@ def check_drogasil(cep, produto):
                         "porcentagem_diferenca": percentage_price,
                         "estoque": int(stocks[0]["quantity"]),
                         "disponibilidade": dict(item["branch"]["address"]),
-                        "loja": "Drogasil",
+                        "loja": loja_nome,
                         "url": d_para_link.get(chave_produto, "")
                     }
 
