@@ -8,6 +8,7 @@ from pacheco import check_pacheco
 from indiana import check_indiana
 from pague_menos import check_pague_menos
 from drograria_sao_paulo import check_drogaria_sao_paulo
+from raia import check_drogaraia
 
 app = FastAPI()
 
@@ -35,6 +36,7 @@ farmacias_checkers = [
     check_pacheco,
     check_indiana,
     check_pague_menos,
+    check_drogaraia
     # check_drogaria_sao_paulo
 ]
 

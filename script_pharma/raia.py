@@ -5,7 +5,7 @@ from playwright.sync_api import sync_playwright
 # =========================
 # PLAYWRIGHT → SESSÃO REAL
 # =========================
-def get_drogasil_session():
+def get_drogaraia_session():
     with sync_playwright() as p:
         browser = p.chromium.launch(
             headless=True,
@@ -32,7 +32,7 @@ def get_drogasil_session():
 # =========================
 # FUNÇÃO PRINCIPAL
 # =========================
-def check_drogasil(cep, produto):
+def check_drogaraia(cep, produto):
 
     chave_produto = produto.strip()
 
@@ -124,7 +124,7 @@ def check_drogasil(cep, produto):
     }
 
     try:
-        cookies = get_drogasil_session()
+        cookies = get_drogaraia_session()
 
         headers = {
             "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) "
@@ -161,12 +161,12 @@ def check_drogasil(cep, produto):
                         "porcentagem_diferenca": percentage_price,
                         "estoque": int(stocks[0]["quantity"]),
                         "disponibilidade": dict(item["branch"]["address"]),
-                        "loja": "Drogasil",
+                        "loja": "Drogaraia",
                         "url": d_para_link.get(chave_produto, "")
                     }
 
     except Exception as e:
-        print(f"Erro Drogasil: {e}")
+        print(f"Erro Drogaraia: {e}")
         return None
 
     return None
