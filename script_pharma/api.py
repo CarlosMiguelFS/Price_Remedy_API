@@ -13,14 +13,10 @@ from drograria_sao_paulo import check_drogaria_sao_paulo
 app = FastAPI()
 
 origins = [
-    "https://3000-i9ej1of031jvjmrchzi0z-c6ad99b1.manus.computer",
-    "https://medradar-dnhsdsop.manus.space",
-    "https://lovable.dev/projects/7dbf5259-3626-42d5-8b98-22dd3c29409d",
-    "https://app-9a8765fc-728b-4155-b95f-496f84e6f469.base44.app",
     "https://med-radar.base44.app",
-    "http://localhost:3000",
     "https://radar-meds.lovable.app",
-    "https://app.base44.com/apps/69190e47002195fa7c0dd7ec/editor/preview/Home"
+    "https://app.base44.com/apps/69190e47002195fa7c0dd7ec/editor/preview/Home",
+    "https://aistudio.google.com/apps/drive/1zIg7ybuKEFCR9KqNtoPSwzdDypvryZK1?showAssistant=true&showPreview=true&resourceKey="
 ]
 
 app.add_middleware(
