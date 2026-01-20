@@ -16,7 +16,8 @@ origins = [
     "https://med-radar.base44.app",
     "https://radar-meds.lovable.app",
     "https://app.base44.com/apps/69190e47002195fa7c0dd7ec/editor/preview/Home",
-    "https://aistudio.google.com/apps/drive/1zIg7ybuKEFCR9KqNtoPSwzdDypvryZK1?showAssistant=true&showPreview=true&resourceKey="
+    "https://aistudio.google.com/apps/drive/1zIg7ybuKEFCR9KqNtoPSwzdDypvryZK1?showAssistant=true&showPreview=true&resourceKey=",
+    "https://radar-meds.lovable.app"
 ]
 
 app.add_middleware(
