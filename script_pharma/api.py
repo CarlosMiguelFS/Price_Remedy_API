@@ -18,7 +18,8 @@ origins = [
     "https://sonar-med.base44.app",
     "https://app.base44.com/apps/69190e47002195fa7c0dd7ec/editor/preview/Home",
     "https://aistudio.google.com/apps/drive/1zIg7ybuKEFCR9KqNtoPSwzdDypvryZK1?showAssistant=true&showPreview=true&resourceKey=",
-    "https://radar-meds.lovable.app"
+    "https://radar-meds.lovable.app",
+    "https://med-location.base44.app"
 ]
 
 app.add_middleware(
