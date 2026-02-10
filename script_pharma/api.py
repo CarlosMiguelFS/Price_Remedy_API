@@ -13,13 +13,7 @@ from drograria_sao_paulo import check_drogaria_sao_paulo
 app = FastAPI()
 
 origins = [
-    "https://med-radar.base44.app",
-    "http://localhost:5173",
-    "https://radar-meds.lovable.app",
-    "https://sonar-med.base44.app",
-    "https://app.base44.com/apps/69190e47002195fa7c0dd7ec/editor/preview/Home",
-    "https://aistudio.google.com/apps/drive/1zIg7ybuKEFCR9KqNtoPSwzdDypvryZK1?showAssistant=true&showPreview=true&resourceKey=",
-    "https://radar-meds.lovable.app",
+    "https://med-radar-nine.vercel.app",
     "https://med-location.base44.app"
 ]
 
