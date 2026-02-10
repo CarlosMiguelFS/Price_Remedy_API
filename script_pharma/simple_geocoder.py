@@ -1,4 +1,3 @@
-
 import requests
 import time
 from typing import Optional, Dict
@@ -92,6 +91,14 @@ class SimpleGeocoder:
         print(f"❌ Não foi possível geocodificar: {full_address[:50]}...")
         return None
     
+    def geocode_with_fallback(self, rua: str, numero: str, bairro: str,
+                             cidade: str, estado: str, **kwargs) -> Optional[Dict]:
+        """
+        Método compatível com geocoding_service.py
+        Ignora as API keys (kwargs) e usa apenas Nominatim
+        """
+        return self.geocode(rua, numero, bairro, cidade, estado)
+    
     def _geocode_nominatim(self, address: str) -> Optional[Dict]:
         """Faz a requisição real ao Nominatim"""
         try:
@@ -136,41 +143,3 @@ class SimpleGeocoder:
 # Instância global
 geocoder = SimpleGeocoder()
 
-
-# Exemplos de uso:
-if __name__ == "__main__":
-    print("🧪 Testando geocodificador...")
-    
-    # Teste 1: Endereço completo
-    result1 = geocoder.geocode(
-        rua="AVENIDA AUGUSTO EMILIO ESTELITA LINS",
-        numero="465",
-        bairro="JD CAMBURI",
-        cidade="VITÓRIA",
-        estado="ES"
-    )
-    print(f"\nTeste 1: {result1}")
-    
-    # Teste 2: Endereço sem número
-    result2 = geocoder.geocode(
-        rua="Avenida José Moreira Martins Rato",
-        numero="",
-        bairro="de Fátima",
-        cidade="Serra",
-        estado="ES"
-    )
-    print(f"\nTeste 2: {result2}")
-    
-    # Teste 3: Cache (deve ser instantâneo)
-    print("\n⏱️ Testando cache...")
-    start = time.time()
-    result3 = geocoder.geocode(
-        rua="AVENIDA AUGUSTO EMILIO ESTELITA LINS",
-        numero="465",
-        bairro="JD CAMBURI",
-        cidade="VITÓRIA",
-        estado="ES"
-    )
-    end = time.time()
-    print(f"Tempo com cache: {(end-start)*1000:.2f}ms (deve ser < 1ms)")
-    print(f"Teste 3: {result3}")
