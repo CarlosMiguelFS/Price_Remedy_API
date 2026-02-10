@@ -14,6 +14,7 @@ app = FastAPI()
 
 origins = [
     "https://med-radar.base44.app",
+    "http://localhost:5173",
     "https://radar-meds.lovable.app",
     "https://sonar-med.base44.app",
     "https://app.base44.com/apps/69190e47002195fa7c0dd7ec/editor/preview/Home",
