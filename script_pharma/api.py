@@ -42,6 +42,15 @@ farmacias_checkers = [
 GOOGLE_MAPS_API_KEY = os.getenv('GOOGLE_MAPS_API_KEY')
 POSITIONSTACK_API_KEY = os.getenv('POSITIONSTACK_API_KEY')
 
+def normalizar_resultados(resultado):
+    if not resultado:
+        return []
+
+    if isinstance(resultado, list):
+        return [item for item in resultado if item]
+
+    return [resultado]
+
 def formatar_resultado(res):
     endereco = res.get('disponibilidade') or res.get('endereco')
     
@@ -74,29 +83,36 @@ def formatar_resultado(res):
         
         dict_endereco["endereco_formatado"] = f"{dict_endereco['rua']}, {dict_endereco['numero']}"
     
-    # GEOCODIFICAÇÃO
-    try:
-        geo_result = geocoder.geocode_with_fallback(
-            rua=dict_endereco["rua"],
-            numero=dict_endereco["numero"],
-            bairro=dict_endereco["bairro"],
-            cidade=dict_endereco["cidade"],
-            estado=dict_endereco["estado"],
-            google_api_key=GOOGLE_MAPS_API_KEY,
-            positionstack_api_key=POSITIONSTACK_API_KEY
-        )
-        
-        if geo_result:
-            dict_endereco["latitude"] = geo_result['lat']
-            dict_endereco["longitude"] = geo_result['lon']
-            dict_endereco["geocode_source"] = geo_result.get('source')
-            dict_endereco["geocode_confidence"] = geo_result.get('importance') or geo_result.get('confidence')
+    possui_endereco_estruturado = any([
+        dict_endereco["rua"],
+        dict_endereco["bairro"],
+        dict_endereco["cidade"],
+        dict_endereco["estado"]
+    ])
+
+    if possui_endereco_estruturado:
+        try:
+            geo_result = geocoder.geocode_with_fallback(
+                rua=dict_endereco["rua"],
+                numero=dict_endereco["numero"],
+                bairro=dict_endereco["bairro"],
+                cidade=dict_endereco["cidade"],
+                estado=dict_endereco["estado"],
+                google_api_key=GOOGLE_MAPS_API_KEY,
+                positionstack_api_key=POSITIONSTACK_API_KEY
+            )
             
-            # Atualiza endereço formatado com o retornado pelo serviço de geocoding
-            if geo_result.get('display_name'):
-                dict_endereco["endereco_completo"] = geo_result['display_name']
-    except Exception as e:
-        print(f"Erro ao geocodificar {dict_endereco['endereco_formatado']}: {e}")
+            if geo_result:
+                dict_endereco["latitude"] = geo_result['lat']
+                dict_endereco["longitude"] = geo_result['lon']
+                dict_endereco["geocode_source"] = geo_result.get('source')
+                dict_endereco["geocode_confidence"] = geo_result.get('importance') or geo_result.get('confidence')
+                
+                # Atualiza endereço formatado com o retornado pelo serviço de geocoding
+                if geo_result.get('display_name'):
+                    dict_endereco["endereco_completo"] = geo_result['display_name']
+        except Exception as e:
+            print(f"Erro ao geocodificar {dict_endereco['endereco_formatado']}: {e}")
 
     return {
         "loja": res.get('loja'),
@@ -148,8 +164,8 @@ def buscar_remedio_cep(cep: str, produto: str):
     for checar_farmacia in farmacias_checkers:
         try:
             resultado = checar_farmacia(cep, produto)
-            if resultado:
-                result_form = formatar_resultado(resultado)
+            for item in normalizar_resultados(resultado):
+                result_form = formatar_resultado(item)
                 resultados_farma.append(result_form)
         except Exception as e:
             print(f"Erro ao checar farmácia {checar_farmacia.__name__}: {e}")
@@ -165,7 +181,7 @@ def buscar_remedio_cep(cep: str, produto: str):
     
     print(f"Encontrados {len(resultados_farma)} resultados")
     return {
-        "mensagem": f"Encontrado em {len(resultados_farma)} farmácia(s)",
+        "mensagem": f"Encontrados {len(resultados_farma)} resultado(s)",
         "resultados": resultados_farma
     }
 

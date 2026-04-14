@@ -18,6 +18,7 @@ class Crawler:
     
     def requests_pattern_freight(cep, id_prod, url_trat, pharmacy):
         headers = {"User-Agent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/142.0.0.0 Safari/537.36"}
+        resultados = []
         
         payload_decripted = json.dumps({"country":"BRA","postalCode":cep,"items":[{"quantity":"1","id":id_prod,"seller":"1"}]})
         payload_bytes = payload_decripted.encode("utf-8")
@@ -33,17 +34,20 @@ class Crawler:
             slas = response_freight.get("data", {}).get("shipping", {}).get("logisticsInfo", [{}])[0].get("slas", [])
             for frete in slas:
                 if frete.get("pickupStoreInfo", {}).get("address"):
-                    return frete["pickupStoreInfo"]["address"]
+                    resultados.append(frete["pickupStoreInfo"]["address"])
+                    continue
                 if "Retirada" in frete.get("id", ""):
-                    return frete.get("friendlyName")
+                    friendly_name = frete.get("friendlyName")
+                    if friendly_name:
+                        resultados.append(friendly_name)
             
         elif "INDIANA" == pharmacy:
             options = response_freight.get("data", {}).get("shippingSLA", {}).get("pickupOptions", [])
             for frete in options:
                 if frete.get("id"):
-                    return frete["id"]
+                    resultados.append(frete["id"])
 
-        return None
+        return resultados or None
         
 
     def datas(cep, estado, loja, url, sku, produto):

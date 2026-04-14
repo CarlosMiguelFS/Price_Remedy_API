@@ -5,6 +5,15 @@ from santa_lucia import check_santa_lucia
 from indiana import check_indiana
 from pague_menos import check_pague_menos
 
+def normalizar_resultados(resultado):
+    if not resultado:
+        return []
+
+    if isinstance(resultado, list):
+        return [item for item in resultado if item]
+
+    return [resultado]
+
 def main():
 
     if len(sys.argv) > 1:
@@ -12,7 +21,12 @@ def main():
     else:
         cep = input("Digite o CEP (apenas números): ")
 
-    print(f"Buscando Mounjaro para o CEP: {cep}...\n")
+    if len(sys.argv) > 2:
+        produto = sys.argv[2]
+    else:
+        produto = "Mounjaro 2,5mg/ml"
+
+    print(f"Buscando {produto} para o CEP: {cep}...\n")
     
     resultados_encontrados = []
 
@@ -26,10 +40,8 @@ def main():
 
     for checar_farmacia in farmacias_checkers:
 
-        resultado = checar_farmacia(cep)
-        
-        if resultado:
-            resultados_encontrados.append(resultado)
+        resultado = checar_farmacia(cep, produto)
+        resultados_encontrados.extend(normalizar_resultados(resultado))
 
 
     if not resultados_encontrados:

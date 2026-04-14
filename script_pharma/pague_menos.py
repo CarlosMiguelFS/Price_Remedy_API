@@ -1,6 +1,5 @@
 def check_pague_menos(cep,produto):
     import httpx
-    # Removido product_description = {} pois não é mais usado
 
     d_para = {
         "Mounjaro 2,5mg/ml": "166502",
@@ -48,13 +47,10 @@ def check_pague_menos(cep,produto):
 
     headers = {"User-Agent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/139.0.0.0 Safari/537.36 OPR/123.0.0.0"}
     endereco = httpx.post("https://www.paguemenos.com.br/api/checkout/pub/orderForms/simulation", json=payload, headers=headers).json()
-    
-    # Lógica de retorno corrigida:
+    resultados = []
+
     for values in endereco.get("pickupPoints",[]):
-        # Retorna o primeiro endereço encontrado
         if values.get("address"):
-            return {"loja": "Pague Menos", "endereco": dict(values["address"]), "url":d_para_link[produto], "melhor_preco" : round(best_price, 2), "preco_padrao":round(standard_price, 2),"porcentagem_diferenca":round(percentage_price, 2) } 
+            resultados.append({"loja": "Pague Menos", "endereco": dict(values["address"]), "url":d_para_link[produto], "melhor_preco" : round(best_price, 2), "preco_padrao":round(standard_price, 2),"porcentagem_diferenca":round(percentage_price, 2) })
 
-    return None
-
-print(check_pague_menos("29161-716","Ritalina LA 10mg/ml"))
+    return resultados or None

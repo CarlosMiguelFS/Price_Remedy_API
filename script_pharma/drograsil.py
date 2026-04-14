@@ -94,7 +94,7 @@ def check_drogasil(cep, produto):
             "zipcode": cep.replace("-", ""),
             "products": [{"sku": d_para[chave_produto], "quantity": 1}],
             "logotype": "RD",
-            "maxQuantityBranchSearch": "3"
+            "maxQuantityBranchSearch": "50"
         },
         "query": """
         query GET_STOCK($zipcode: String!, $products: [StockNearbyBtZipCodeTypeInput!]!,
@@ -155,38 +155,24 @@ def check_drogasil(cep, produto):
             resp_freight = client.post(url_drogasil, json=json_freight).json()
             data_freight = resp_freight.get("data", {}).get("getNearbyStockByZipCode", [])
 
-            has_drogasil = False
-            has_raia = False
-
-            for item_logo in data_freight:
-                logo = item_logo["branch"]["logoType"]["description"].upper()
-                if logo == "DROGASIL":
-                    has_drogasil = True
-                elif logo == "RAIA":
-                    has_raia = True
-
-            if has_drogasil and has_raia:
-                loja_nome = "Drogasil & Raia"
-            elif has_drogasil:
-                loja_nome = "Drogasil"
-            elif has_raia:
-                loja_nome = "Raia"
-            else:
-                loja_nome = "DESCONHECIDO"
-
-                
+            resultados = []
             for item in data_freight:
                 stocks = item.get("stocks", [])
-                if stocks and stocks[0]["quantity"] > 0:
-                    return {
+                address = item.get("branch", {}).get("address")
+                logo = item.get("branch", {}).get("logoType", {}).get("description", "").strip()
+
+                if stocks and stocks[0]["quantity"] > 0 and address:
+                    resultados.append({
                         "melhor_preco": best_price,
                         "preco_padrao": standard_price,
                         "porcentagem_diferenca": percentage_price,
                         "estoque": int(stocks[0]["quantity"]),
-                        "disponibilidade": dict(item["branch"]["address"]),
-                        "loja": loja_nome,
+                        "disponibilidade": dict(address),
+                        "loja": logo.title() if logo else item.get("branch", {}).get("businessName", "DESCONHECIDO"),
                         "url": d_para_link.get(chave_produto, "")
-                    }
+                    })
+
+            return resultados or None
 
     except Exception as e:
         print(f"Erro Drogasil: {e}")

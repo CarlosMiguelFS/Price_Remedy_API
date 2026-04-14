@@ -46,14 +46,22 @@ def check_indiana(cep, produto):
             
         best_price = items[0]["price"]
         
-        endereco = Crawler.requests_pattern_freight(cep, d_para[chave_produto], url, "INDIANA") 
-        if endereco:
-            return {
-                "loja": "Indiana", 
-                "disponibilidade": endereco.replace("Retire na loja - ", ""),
-                "url": d_para_link.get(chave_produto, ""), 
-                "melhor_preco": best_price/100
-            }
+        enderecos = Crawler.requests_pattern_freight(cep, d_para[chave_produto], url, "INDIANA")
+        if enderecos:
+            if not isinstance(enderecos, list):
+                enderecos = [enderecos]
+
+            resultados = []
+            for endereco in enderecos:
+                disponibilidade = endereco.replace("Retire na loja - ", "") if isinstance(endereco, str) else endereco
+                resultados.append({
+                    "loja": "Indiana",
+                    "disponibilidade": disponibilidade,
+                    "url": d_para_link.get(chave_produto, ""),
+                    "melhor_preco": best_price/100
+                })
+
+            return resultados
             
     except Exception as e:
         print(f"Erro interno Indiana: {e}")

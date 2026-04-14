@@ -33,7 +33,6 @@ def check_pacheco(cep,produto):
         "Ritalina LA 40mg/ml":"https://www.drogariaspacheco.com.br/ritalina-la-40mg-novartis-biociencias-30-comprimidos/p",
     }
 
-    product_description = {}
     url_pharm = "https://www.drogariaspacheco.com.br/api/checkout/pub/orderforms/simulation"
     
     url_price = f"https://www.drogariaspacheco.com.br/api/catalog_system/pub/products/search?fq=skuId:{d_para[produto]}"
@@ -56,16 +55,21 @@ def check_pacheco(cep,produto):
 
     resp_frete = httpx.post(url_pharm, json= payload ,headers=headers).json()
     resp_price = httpx.get(url_price, headers=headers).json()
+    resultados = []
 
     if resp_frete.get("logisticsInfo"):
+        preco_padrao = float(resp_frete["items"][0]["price"]/100)
+        melhor_preco = float(str(resp_price[0]["Valor Desconto Minimo"]).replace("['","").replace("']",""))
+
         for product in resp_frete["logisticsInfo"][0]["slas"]:
             if product.get("pickupStoreInfo", {}).get("address"):
-                product_description["endereco"] = product["pickupStoreInfo"]["address"]  
-                product_description["value"] = float(resp_frete["items"][0]["price"]/100)
-                product_description["melhor_preco"] = float(str(resp_price[0]["Valor Desconto Minimo"]).replace("['","").replace("']",""))
-                product_description["loja"] = "Pacheco"
-                product_description["url"] = d_para_link[produto]
-                return product_description
+                resultados.append({
+                    "endereco": product["pickupStoreInfo"]["address"],
+                    "value": preco_padrao,
+                    "melhor_preco": melhor_preco,
+                    "loja": "Pacheco",
+                    "url": d_para_link[produto]
+                })
     
-    return None
+    return resultados or None
 

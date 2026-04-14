@@ -29,15 +29,16 @@ def check_drogaria_sao_paulo(cep,produto):
     headers = {"User-Agent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/139.0.0.0 Safari/537.36 OPR/123.0.0.0"}
     endereco = httpx.post("https://www.drogariasaopaulo.com.br/api/checkout/pub/orderforms/simulation", json=payload, headers=headers).json()
     preco = endereco["items"][0]["price"] / 100
+    resultados = []
 
     for values in endereco.get("pickupPoints", []):
         if values.get("address"):
-            return {
+            resultados.append({
                 "loja": "Drogaria São Paulo",
                 "endereco": dict(values["address"]),
                 "url": d_para_link[produto],
                 "melhor_preco": preco
-            }
+            })
 
-    return None
+    return resultados or None
 
