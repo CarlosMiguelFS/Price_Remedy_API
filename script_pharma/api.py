@@ -18,7 +18,7 @@ origins = [
     "https://med-radar-nine.vercel.app",
     "https://med-location.base44.app",
     "http://localhost:3000",
-    "http://localhost:5173",
+    "https://radar-medicamentos.base44.app/",
 ]
 
 app.add_middleware(
