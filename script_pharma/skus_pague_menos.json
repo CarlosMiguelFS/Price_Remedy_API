@@ -1,0 +1,92 @@
+{
+  "Losartana 50mg": {
+    "sku": "30558",
+    "url": "https://www.paguemenos.com.br/losartana-potassica-50mg-com-30-comprimidos-genericos-ems/p",
+    "name_found": "Losartana Potássica 50mg 30 Comprimidos Revestidos Genérico EMS",
+    "score": 3
+  },
+  "Dipirona 500mg": {
+    "sku": "35965",
+    "url": "https://www.paguemenos.com.br/dipirona-sodica-mais-cafeina-com-16-comprimidos-generico-neo-quimica/p",
+    "name_found": "Dipirona 500mg + Cafeína 65mg 16 Comprimidos Genérico Neo Química",
+    "score": 3
+  },
+  "Glifage XR 500mg": {
+    "sku": "27454",
+    "url": "https://www.paguemenos.com.br/glifage-xr-500mg-com-30-comprimidos/p",
+    "name_found": "Glifage XR 500mg 30 Comprimidos",
+    "score": 4
+  },
+  "Neosoro": {
+    "sku": "95239",
+    "url": "https://www.paguemenos.com.br/neosoro-fluid-0-9porcento-spray-50ml/p",
+    "name_found": "Neosoro Fluid 0,9% Solução Nasal Spray 50ml",
+    "score": 1
+  },
+  "Tadalafila 5mg": {
+    "sku": "47378",
+    "url": "https://www.paguemenos.com.br/tadalafila-5mg-com-30-comprimidos-generico-ems/p",
+    "name_found": "Tadalafila 5mg 30 Comprimidos EMS Genérico",
+    "score": 3
+  },
+  "Nimesulida 100mg": {
+    "sku": "151277",
+    "url": "https://www.paguemenos.com.br/nimesulida-100mg-12-comprimidos-globo-generico/p",
+    "name_found": "Nimesulida 100mg 12 Comprimidos Genérico Globo",
+    "score": 3
+  },
+  "Simeticona 75mg/ml": {
+    "sku": "67584",
+    "url": "https://www.paguemenos.com.br/simeticona-75mg-gotas-10ml/p",
+    "name_found": "Simeticona 75mg/ml Gotas 10ml",
+    "score": 3
+  },
+  "Omeprazol 20mg": {
+    "sku": "1631989",
+    "url": "https://www.paguemenos.com.br/omeprazol-20mg-56-capsulas-generico-geolab/p",
+    "name_found": "Omeprazol 20mg 56 Cápsulas Genérico Geolab",
+    "score": 3
+  },
+  "Paracetamol 750mg": {
+    "sku": "1631488",
+    "url": "https://www.paguemenos.com.br/paracetamol-750mg-20-comprimidos/p",
+    "name_found": "Paracetamol 750mg 10 Comprimidos",
+    "score": 3
+  },
+  "Hidroclorotiazida 25mg": {
+    "sku": "49223",
+    "url": "https://www.paguemenos.com.br/hidroclorotiazida-25mg-com-30-comprimidos-generico-medquimica/p",
+    "name_found": "Hidroclorotiazida 25mg 30 Comprimidos Genérico Medquimica",
+    "score": 3
+  },
+  "Buscopan Composto": {
+    "sku": "96576",
+    "url": "https://www.paguemenos.com.br/buscopan-composto-envelope-com-4-comprimidos/p",
+    "name_found": "Buscopan Composto 10mg + 500mg 4 Comprimidos Revestidos",
+    "score": 2
+  },
+  "Dorflex": {
+    "sku": "1633272",
+    "url": "https://www.paguemenos.com.br/kit-dorflex-max-600mg---70mg---100mg-16-comprimidos---dorflex-uno-1g-20-comprimidos/p",
+    "name_found": "Kit Dorflex Max 600mg + 70mg + 100mg 16 Comprimidos + Dorflex Uno 1g 20 Comprimidos",
+    "score": 1
+  },
+  "Microvlar": {
+    "sku": "640",
+    "url": "https://www.paguemenos.com.br/microvlar-envelope-com-21-comprimidos/p",
+    "name_found": "Microvlar 0,15mg + 0,03mg 21 Comprimidos Revestidos",
+    "score": 1
+  },
+  "Addera D3": {
+    "sku": "55599",
+    "url": "https://www.paguemenos.com.br/addera-d3-600ui-gotas-5ml/p",
+    "name_found": "Addera D3 600UI Gotas 5ml",
+    "score": 3
+  },
+  "Ciclo 21": {
+    "sku": "24304",
+    "url": "https://www.paguemenos.com.br/ciclo-21-cartela-com-21-comprimidos/p",
+    "name_found": "Ciclo 21 0,15mg + 0,03mg 21 Comprimidos",
+    "score": 3
+  }
+}

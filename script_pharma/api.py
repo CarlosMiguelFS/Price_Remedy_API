@@ -1,8 +1,14 @@
 import os
+import re
+import time
+from collections import defaultdict, deque
+from urllib.parse import urlparse
 
+import httpx
 import uvicorn
-from fastapi import FastAPI
+from fastapi import FastAPI, HTTPException, Request
 from fastapi.middleware.cors import CORSMiddleware
+from pydantic import BaseModel, Field, field_validator
 
 from drograria_sao_paulo import check_drogaria_sao_paulo
 from drograsil import check_drogasil
@@ -14,18 +20,23 @@ from simple_geocoder import geocoder
 
 app = FastAPI()
 
-origins = [
-    "https://med-radar-nine.vercel.app",
-    "https://radar-medicamentos.base44.app",
-    "https://radar-medicamentos.base44.app/"
-]
+# Allowlist de origens (mesma origem do front em produção).
+origins_env = os.getenv("CORS_ALLOWED_ORIGINS", "")
+if origins_env.strip():
+    origins = [o.strip() for o in origins_env.split(",") if o.strip()]
+else:
+    origins = [
+        "https://med-radar-nine.vercel.app",
+        "https://radar-medicamentos.base44.app",
+        "http://localhost:5173",
+    ]
 
 app.add_middleware(
     CORSMiddleware,
     allow_origins=origins,
     allow_credentials=True,
-    allow_methods=["*"],
-    allow_headers=["*"],
+    allow_methods=["GET", "POST"],
+    allow_headers=["Accept", "Content-Type"],
 )
 
 farmacias_checkers = [
@@ -38,6 +49,48 @@ farmacias_checkers = [
 
 GOOGLE_MAPS_API_KEY = os.getenv("GOOGLE_MAPS_API_KEY")
 POSITIONSTACK_API_KEY = os.getenv("POSITIONSTACK_API_KEY")
+LOMADEE_APP_TOKEN = os.getenv("LOMADEE_APP_TOKEN")
+LOMADEE_SOURCE_ID = os.getenv("LOMADEE_SOURCE_ID", "")
+LOMADEE_DEFAULT_CHANNEL = os.getenv("LOMADEE_DEFAULT_CHANNEL", "")
+
+# Domínios que aceitamos converter em deeplink de afiliado (anti-open-redirect).
+LOMADEE_ALLOWED_DOMAINS = {
+    "drogariaspacheco.com.br",
+    "www.drogariaspacheco.com.br",
+    "drogariasaopaulo.com.br",
+    "www.drogariasaopaulo.com.br",
+}
+
+# Caracteres permitidos em "produto": letras/dígitos/espaço/, . / - + ()
+PRODUTO_REGEX = re.compile(r"^[A-Za-zÀ-ÿ0-9 ,./\-+()]{2,80}$")
+CEP_REGEX = re.compile(r"^\d{8}$")
+
+# Rate limiting por IP (memória, processo único).
+_rate_buckets: dict[str, deque[float]] = defaultdict(deque)
+RATE_LIMIT_PER_MIN_BUSCAR = int(os.getenv("RATE_LIMIT_BUSCAR", "30"))
+RATE_LIMIT_PER_MIN_AFFILIATE = int(os.getenv("RATE_LIMIT_AFFILIATE", "60"))
+
+
+def _client_ip(request: Request) -> str:
+    fwd = request.headers.get("x-forwarded-for", "")
+    if fwd:
+        return fwd.split(",")[0].strip()
+    if request.client:
+        return request.client.host
+    return "unknown"
+
+
+def _check_rate_limit(ip: str, scope: str, limit: int) -> None:
+    if limit <= 0:
+        return
+    key = f"{scope}:{ip}"
+    bucket = _rate_buckets[key]
+    now = time.time()
+    while bucket and now - bucket[0] > 60:
+        bucket.popleft()
+    if len(bucket) >= limit:
+        raise HTTPException(status_code=429, detail="Muitas requisições, tente em alguns segundos.")
+    bucket.append(now)
 
 
 def normalizar_resultados(resultado):
@@ -214,6 +267,7 @@ def root():
         "message": "API Med Radar - Sistema de busca de medicamentos",
         "endpoints": {
             "/buscar/{cep}": "Buscar medicamento por CEP (query param: produto)",
+            "/affiliate/shorten": "Gera URL Lomadee a partir de URL de produto (POST)",
             "/health": "Status da API",
         },
     }
@@ -228,11 +282,88 @@ def health_check():
             "google_maps": "ativo" if GOOGLE_MAPS_API_KEY else "inativo",
             "positionstack": "ativo" if POSITIONSTACK_API_KEY else "inativo",
         },
+        "affiliate": {
+            "lomadee": "ativo" if LOMADEE_APP_TOKEN else "inativo",
+        },
     }
 
 
+class ShortenRequest(BaseModel):
+    url: str = Field(..., min_length=8, max_length=2048)
+    channelId: str | None = Field(default=None, max_length=64)
+
+    @field_validator("url")
+    @classmethod
+    def validar_url(cls, v: str) -> str:
+        parsed = urlparse(v.strip())
+        if parsed.scheme not in {"http", "https"} or not parsed.netloc:
+            raise ValueError("URL inválida")
+        host = parsed.netloc.lower()
+        if host not in LOMADEE_ALLOWED_DOMAINS:
+            raise ValueError("Domínio não suportado pelo afiliado")
+        return f"{parsed.scheme}://{host}{parsed.path}"
+
+    @field_validator("channelId")
+    @classmethod
+    def validar_channel(cls, v):
+        if v is None:
+            return v
+        v = v.strip()
+        if not re.match(r"^[A-Za-z0-9\-_]{4,64}$", v):
+            raise ValueError("channelId inválido")
+        return v
+
+
+@app.post("/affiliate/shorten")
+def affiliate_shorten(payload: ShortenRequest, request: Request):
+    _check_rate_limit(_client_ip(request), "affiliate", RATE_LIMIT_PER_MIN_AFFILIATE)
+
+    if not LOMADEE_APP_TOKEN:
+        raise HTTPException(status_code=503, detail="Integração Lomadee indisponível")
+
+    source_id = LOMADEE_SOURCE_ID or payload.channelId or LOMADEE_DEFAULT_CHANNEL
+    if not source_id:
+        raise HTTPException(status_code=500, detail="LOMADEE_SOURCE_ID não configurado")
+
+    api_url = f"https://api.lomadee.com/v3/{LOMADEE_APP_TOKEN}/deeplink/_create"
+    try:
+        resp = httpx.post(
+            api_url,
+            params={"sourceId": source_id},
+            json={"deeplink": [{"url": payload.url}]},
+            timeout=10.0,
+        )
+        if resp.status_code >= 400:
+            raise HTTPException(status_code=502, detail="Falha Lomadee")
+        data = resp.json() or {}
+    except httpx.HTTPError:
+        raise HTTPException(status_code=502, detail="Falha ao contatar Lomadee")
+
+    deeplinks = data.get("deeplinks") or data.get("data") or []
+    short_url = None
+    if isinstance(deeplinks, list) and deeplinks:
+        item = deeplinks[0] or {}
+        short_url = item.get("deeplink") or item.get("shortUrl") or item.get("url")
+
+    if not short_url:
+        raise HTTPException(status_code=502, detail="Lomadee não retornou URL")
+
+    return {"shortUrl": short_url}
+
+
 @app.get("/buscar/{cep}")
-def buscar_remedio_cep(cep: str, produto: str):
+def buscar_remedio_cep(cep: str, produto: str, request: Request):
+    _check_rate_limit(_client_ip(request), "buscar", RATE_LIMIT_PER_MIN_BUSCAR)
+
+    cep_normalizado = re.sub(r"\D", "", cep or "")
+    if not CEP_REGEX.match(cep_normalizado):
+        raise HTTPException(status_code=400, detail="CEP inválido")
+
+    produto = (produto or "").strip()
+    if not PRODUTO_REGEX.match(produto):
+        raise HTTPException(status_code=400, detail="Nome de medicamento inválido")
+
+    cep = cep_normalizado
     print(f"Buscando {produto} para o CEP: {cep}")
     cep_consultado = normalizar_cep_consultado(cep)
 

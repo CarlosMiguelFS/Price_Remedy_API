@@ -9,7 +9,11 @@
       "Bash(timeout 30 echo \"wait\")",
       "WebSearch",
       "WebFetch(domain:www.drogasil.com.br)",
-      "Bash(python scrape_drogasil_only.py[)"
+      "Bash(python scrape_drogasil_only.py[)",
+      "Bash(python *)",
+      "Bash(pip list *)",
+      "Bash(pip install *)",
+      "Bash(playwright install *)"
     ]
   }
 }

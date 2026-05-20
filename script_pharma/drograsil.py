@@ -116,7 +116,7 @@ def check_drogasil(cep, produto):
             "zipcode": cep.replace("-", ""),
             "products": [{"sku": d_para[chave_produto], "quantity": 1}],
             "logotype": "RD",
-            "maxQuantityBranchSearch": "50"
+            "maxQuantityBranchSearch": "30"
         },
         "query": """
         query GET_STOCK($zipcode: String!, $products: [StockNearbyBtZipCodeTypeInput!]!,
@@ -175,7 +175,7 @@ def check_drogasil(cep, produto):
             percentage_price = ((standard_price - best_price) / standard_price) * 100
 
             resp_freight = client.post(url_drogasil, json=json_freight).json()
-            data_freight = resp_freight.get("data", {}).get("getNearbyStockByZipCode", [])
+            data_freight = (resp_freight.get("data") or {}).get("getNearbyStockByZipCode", []) or []
 
             resultados = []
             for item in data_freight:
