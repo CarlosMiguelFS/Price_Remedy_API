@@ -4,14 +4,40 @@ def check_drogaria_sao_paulo(cep,produto):
         "Mounjaro 2,5mg/ml": "887528",
         "Mounjaro 5mg/ml": "887455",
         "Mounjaro 7,5mg/ml": "887951",
-        "Mounjaro 10mg/ml": "888060"
+        "Mounjaro 10mg/ml": "888060",
+        # Top 15 mais vendidos (markdown)
+        "Tadalafila 5mg EMS": "602426",
+        "Glifage XR 500mg": "155349",
+        "Wegovy 2,4mg": "862045",
+        "Wegovy 0,25mg": "862002",
+        "Dipirona 1g Cimed": "841188",
+        "Mecobe 1000mcg": "818992",
+        "Dipirona 500mg Prati Donaduzzi": "701173",
+        "Omeprazol 20mg Cimed": "684333",
+        "Glyxambi": "681393",
+        "Cetoprofeno 150mg Eurofarma": "668419",
+        "Nimesulida 100mg Cimed": "645958",
+        "Tadalafila 5mg Eurofarma": "530174",
     }
 
     d_para_link = {
         "Mounjaro 2,5mg/ml":"https://www.drogariasaopaulo.com.br/mounjaro-2-5mg-eli-lilly-4-seringa-preenchidas-0-5ml-solucao-injetavel-subcutaneo---4-canetas/p",
         "Mounjaro 5mg/ml":"https://www.drogariasaopaulo.com.br/mounjaro-5mg-eli-lilly-4-seringa-preenchida-0-5ml-solucao-injetavel-subcutaneo-4-canetas/p",
         "Mounjaro 7,5mg/ml":"https://www.drogariasaopaulo.com.br/mounjaro-7-5mg-eli-lilly-4-seringa-0-5ml-solucao-injetavel-subcutaneo-4-canetas/p",
-        "Mounjaro 10mg/ml":"https://www.drogariasaopaulo.com.br/mounjaro-10mg-eli-lilly-4-seringa-0-5ml-solucao-injetavel-subcutaneo-4-canetas/p"
+        "Mounjaro 10mg/ml":"https://www.drogariasaopaulo.com.br/mounjaro-10mg-eli-lilly-4-seringa-0-5ml-solucao-injetavel-subcutaneo-4-canetas/p",
+        # Top 15 mais vendidos (markdown)
+        "Tadalafila 5mg EMS": "https://www.drogariasaopaulo.com.br/tadalafila-5mg-generico-ems-30-comprimidos-revestidos/p",
+        "Glifage XR 500mg": "https://www.drogariasaopaulo.com.br/glifage-xr-500mg-merck-sharp-30-comprimidos/p",
+        "Wegovy 2,4mg": "https://www.drogariasaopaulo.com.br/wegovy-2-4mg-novo-nordisk-4-doses-injetaveis/p",
+        "Wegovy 0,25mg": "https://www.drogariasaopaulo.com.br/wegovy-25mg-novo-nordisk-4-doses-injetaveis/p",
+        "Dipirona 1g Cimed": "https://www.drogariasaopaulo.com.br/dipirona-monoidratada-1g-generico-cimed-10-comprimidos/p",
+        "Mecobe 1000mcg": "https://www.drogariasaopaulo.com.br/mecobe-1000mcg-myralis-90-comprimidos-sublinguais/p",
+        "Dipirona 500mg Prati Donaduzzi": "https://www.drogariasaopaulo.com.br/dipirona-prati--donaduzzi-500mg-generico-30-comprimidos/p",
+        "Omeprazol 20mg Cimed": "https://www.drogariasaopaulo.com.br/omeprazol-20mg-generico-cimed-56-capsulas/p",
+        "Glyxambi": "https://www.drogariasaopaulo.com.br/glyxambi-25mg-30-comprimidos-revestidos-boehringer/p",
+        "Cetoprofeno 150mg Eurofarma": "https://www.drogariasaopaulo.com.br/cetoprofeno-150mg-10-comprimidos-de-liberacao-prolongada-g-eurofarma-labs/p",
+        "Nimesulida 100mg Cimed": "https://www.drogariasaopaulo.com.br/nimesulida-100mg-generico-cimed-12-comprimidos/p",
+        "Tadalafila 5mg Eurofarma": "https://www.drogariasaopaulo.com.br/tadalafila-5mg-generico-eurofarma-30-comprimidos/p",
     }
 
     payload = {

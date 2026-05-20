@@ -15,7 +15,23 @@ def check_santa_lucia(cep,produto):
     "Ritalina LA 40mg/ml":"999053",
     "Ritalina 10mg 60 comprimidos":"1004949",
     "Ritalina 10mg 30 comprimidos":"1022832",
-    "Mounjaro 5mg/ml":"1075336"
+    "Mounjaro 5mg/ml":"1075336",
+    # Top 15 mais vendidos (markdown - estimativa)
+    "Losartana 50mg": "1033234",
+    "Dipirona 500mg": "999948",
+    "Glifage XR 500mg": "1001618",
+    "Neosoro": "222097",
+    "Tadalafila 5mg": "1057267",
+    "Nimesulida 100mg": "1059884",
+    "Simeticona 75mg/ml": "1040799",
+    "Omeprazol 20mg": "1000550",
+    "Paracetamol 750mg": "1038709",
+    "Hidroclorotiazida 25mg": "1026483",
+    "Buscopan Composto": "1073539",
+    "Dorflex": "1026748",
+    "Microvlar": "1054696",
+    "Addera D3": "1057455",
+    "Ciclo 21": "1005123",
     }
     d_para_link = {
         "Ritalina LA 10mg/ml":"https://www.santaluciadrogarias.com.br/ritalina-la-10mg-30-caps-----a---pbm/p",
@@ -24,7 +40,23 @@ def check_santa_lucia(cep,produto):
         "Ritalina LA 40mg/ml":"https://www.santaluciadrogarias.com.br/ritalina-la-40mg-30-caps---b---pbm/p",
         "Ritalina 10mg 60 comprimidos":"https://www.santaluciadrogarias.com.br/ritalina-10mg-60-cprs----b/p",
         "Ritalina 10mg 30 comprimidos":"https://www.santaluciadrogarias.com.br/ritalina-10mg-30-cprs---b/p",
-        "Mounjaro 5mg/ml":"https://www.santaluciadrogarias.com.br/mounjaro-5mg-sol-inj/p"
+        "Mounjaro 5mg/ml":"https://www.santaluciadrogarias.com.br/mounjaro-5mg-sol-inj/p",
+        # Top 15 mais vendidos (markdown - estimativa)
+        "Losartana 50mg": "https://www.santaluciadrogarias.com.br/losart-potassica-50mg-30-cprs---teu-g-/p",
+        "Dipirona 500mg": "https://www.santaluciadrogarias.com.br/dipirona-sod-500mg-10ml---med-g-/p",
+        "Glifage XR 500mg": "https://www.santaluciadrogarias.com.br/glifage-xr-500mg-30-cprs/p",
+        "Neosoro": "https://www.santaluciadrogarias.com.br/neosoro-sol-adulto-30ml-neo/p",
+        "Tadalafila 5mg": "https://www.santaluciadrogarias.com.br/tadalafila-5mg-30-cprs---cimed-g-/p",
+        "Nimesulida 100mg": "https://www.santaluciadrogarias.com.br/nimesulida-100mg-12-cprs---cimed--g-/p",
+        "Simeticona 75mg/ml": "https://www.santaluciadrogarias.com.br/luftal-gts-30ml/p",
+        "Omeprazol 20mg": "https://www.santaluciadrogarias.com.br/omeprazol-20mg-28-caps---teu-g-----/p",
+        "Paracetamol 750mg": "https://www.santaluciadrogarias.com.br/paracetamol-750mg-20-cprs---teu-g---/p",
+        "Hidroclorotiazida 25mg": "https://www.santaluciadrogarias.com.br/hidroclorotiazida-25mg-30cprs---teu-g---p---/p",
+        "Buscopan Composto": "https://www.santaluciadrogarias.com.br/buscopan-composto-gotas-20ml/p",
+        "Dorflex": "https://www.santaluciadrogarias.com.br/dorflex-36-comprimidos/p",
+        "Microvlar": "https://www.santaluciadrogarias.com.br/microvlar-bl-3x21-dgrs/p",
+        "Addera D3": "https://www.santaluciadrogarias.com.br/addera-d3-50000ui-8-cprs/p",
+        "Ciclo 21": "https://www.santaluciadrogarias.com.br/elani-ciclo-21-cprs--/p",
     }
 
     url_price = f"https://www.santaluciadrogarias.com.br/api/catalog_system/pub/products/search/?fq=productId:{d_para[produto]}"

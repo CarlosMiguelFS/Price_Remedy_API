@@ -16,7 +16,23 @@ def check_indiana(cep, produto):
         "Ritalina LA 10mg/ml":"40927",
         "Ritalina LA 40mg/ml":"17170",
         "Ritalina LA 20mg/ml":"17167",
-        "Ritalina LA 30mg/ml":"17168"
+        "Ritalina LA 30mg/ml":"17168",
+        # Top 15 mais vendidos (markdown)
+        "Rosuvastatina 20mg EMS": "50136",
+        "Hidroclorotiazida 25mg EMS": "194874",
+        "Nimesulida 100mg EMS": "14899",
+        "Tadalafila 20mg EMS": "86616",
+        "Apixabana 2,5mg EMS": "190645",
+        "Novalgina Flash 1g": "199261",
+        "Leite de Magnesia EnoMagno": "185478",
+        "Sal de Fruta Eno Limao": "20676",
+        "Paracetamol 750mg Cimed": "19784",
+        "Metoprolol 25mg Cimed": "174614",
+        "Tadalafila 20mg Cimed": "132111",
+        "Nimesulida 100mg Cimed": "83662",
+        "Loratadina 10mg Cimed": "140271",
+        "Dipirona 500mg EMS": "59999",
+        "Losartana 50mg EMS": "19887",
     }
     d_para_link = {
         "Mounjaro 2,5mg/ml": "https://www.farmaciaindiana.com.br/mounjaro-tirzepatida-2-5mg-ml-0-5ml-injetavel-4-canetas-aplicadoras/p",
@@ -27,7 +43,23 @@ def check_indiana(cep, produto):
         "Ritalina LA 10mg/ml":"https://www.farmaciaindiana.com.br/ritalina-la-cloridrato-de-metilfenidato-10mg-30-capsulas/p",
         "Ritalina LA 40mg/ml":"https://www.farmaciaindiana.com.br/ritalina-la-cloridrato-de-metilfenidato-40mg-30-capsulas/p",
         "Ritalina LA 20mg/ml":"https://www.farmaciaindiana.com.br/ritalina-la-cloridrato-de-metilfenidato-20mg-30-capsulas/p",
-        "Ritalina LA 30mg/ml":"https://www.farmaciaindiana.com.br/ritalina-la-cloridrato-de-metilfenidato-30mg-30-capsulas/p"
+        "Ritalina LA 30mg/ml":"https://www.farmaciaindiana.com.br/ritalina-la-cloridrato-de-metilfenidato-30mg-30-capsulas/p",
+        # Top 15 mais vendidos (markdown)
+        "Rosuvastatina 20mg EMS": "https://www.farmaciaindiana.com.br/rosuvastatina-calcica-20mg-ems-generico-30-comprimidos/p",
+        "Hidroclorotiazida 25mg EMS": "https://www.farmaciaindiana.com.br/hidroclorotiazida-25mg-ems-generico-30-comprimidos-1/p",
+        "Nimesulida 100mg EMS": "https://www.farmaciaindiana.com.br/nimesilam-nimesulida-100mg-12-comprimidos/p",
+        "Tadalafila 20mg EMS": "https://www.farmaciaindiana.com.br/tadalafila-20mg-ems-generico-4-comprimidos/p",
+        "Apixabana 2,5mg EMS": "https://www.farmaciaindiana.com.br/apixabana-2-5mg-ems-generico-60-comprimidos-revestidos/p",
+        "Novalgina Flash 1g": "https://www.farmaciaindiana.com.br/novalgina-flash-1g-dipirona-130mg-cafeina-16-comprimidos-analgesico/p",
+        "Leite de Magnesia EnoMagno": "https://www.farmaciaindiana.com.br/leite-de-magnesia-enomagno-tradicional-10ml/p",
+        "Sal de Fruta Eno Limao": "https://www.farmaciaindiana.com.br/sal-de-fruta-eno-limao-100g/p",
+        "Paracetamol 750mg Cimed": "https://www.farmaciaindiana.com.br/paracetamol-750mg-cimed-generico-20-comprimidos/p",
+        "Metoprolol 25mg Cimed": "https://www.farmaciaindiana.com.br/succinato-metoprolol-25mg-30-comprimidos-liberacao-prolongada-generico/p",
+        "Tadalafila 20mg Cimed": "https://www.farmaciaindiana.com.br/tadalafila-20mg-cimed-generico-4-comprimidos/p",
+        "Nimesulida 100mg Cimed": "https://www.farmaciaindiana.com.br/nimesulida-100mg-cimed-generico-12-comprimidos/p",
+        "Loratadina 10mg Cimed": "https://www.farmaciaindiana.com.br/loratadina-dez-mg-cimed-generico-doze-comprimidos/p",
+        "Dipirona 500mg EMS": "https://www.farmaciaindiana.com.br/dipirona-sodica-500mg-ems-generico-10-comprimidos/p",
+        "Losartana 50mg EMS": "https://www.farmaciaindiana.com.br/losart-pot-50mg-30cpr-ems/p",
     }
 
     chave_produto = produto.strip()

@@ -46,7 +46,13 @@ def check_drogasil(cep, produto):
         "Ritalina LA 10mg/ml": "37153",
         "Ritalina LA 30mg/ml": "97778",
         "Ritalina LA 40mg/ml": "11613",
-        "Ritalina LA 20mg/ml": "31770"
+        "Ritalina LA 20mg/ml": "31770",
+        # Top 15 mais vendidos (markdown). Drogasil bloqueou scraping automatico (Akamai);
+        # SKUs abaixo foram extraidos das URLs que ja tinham codigo embutido.
+        # Para os outros 13 produtos da lista, ver dicionario d_para_link e completar
+        # manualmente apos visitar a pagina (o SKU aparece no JSON `__NEXT_DATA__` do HTML).
+        "Cimegripe": "1022093",
+        "Rosuvastatina 20mg Althaia": "1054449",  # 90 comprimidos (a unica URL com SKU embutido)
     }
 
     d_para_link = {
@@ -59,7 +65,23 @@ def check_drogasil(cep, produto):
         "Ritalina LA 10mg/ml": "https://www.drogasil.com.br/ritalina-la-10mg-com-30-capsulas-a3.html",
         "Ritalina LA 30mg/ml": "https://www.drogasil.com.br/ritalina-30mg-acao-prolongada-30-capsulas-gelatinosas-a3.html",
         "Ritalina LA 40mg/ml": "https://www.drogasil.com.br/ritalina-40mg-acao-prolongada-30-capsulas-gelatinosa-a3.html",
-        "Ritalina LA 20mg/ml": "https://www.drogasil.com.br/ritalina-la-20mg-acao-prolongada-30-capsulas-gelatinosa-a3.html"
+        "Ritalina LA 20mg/ml": "https://www.drogasil.com.br/ritalina-la-20mg-acao-prolongada-30-capsulas-gelatinosa-a3.html",
+        # Top 15 mais vendidos (markdown) - URLs obtidas via Google search
+        "Simeticona 125mg Medley": "https://www.drogasil.com.br/simeticona-125mg-medley-generico-10-capsulas-gelatinosas.html",
+        "Dipirona 1g Cimed": "https://www.drogasil.com.br/dipirona-genericos-1g-com-10-comprimidos.html",
+        "Cimegripe": "https://www.drogasil.com.br/cimegripe-10-capsulas-1022093.html",
+        "Glyxambi": "https://www.drogasil.com.br/glyxambi-10mg-5mg-com-30-comprimidos.html",
+        "Tadalafila 5mg EMS": "https://www.drogasil.com.br/tadalafila-5mg-ems-generico-30-comprimidos-revestidos.html",
+        "Sertralina 50mg Medley": "https://www.drogasil.com.br/cloridrato-de-sertralina-50-mg-medley-generico-30-comprimidos-c1.html",
+        "Glifage XR 500mg": "https://www.drogasil.com.br/glifage-xr-500-mg-30-comprimidos.html",
+        "Rosuvastatina 20mg Althaia": "https://www.drogasil.com.br/rosuvastatina-calcica-20mg-althaia-genericos-90-comprimidos-revestidos-1054449.html",
+        "Durateston": "https://www.drogasil.com.br/durateston-250-mg-1-ampola-c5.html",
+        "Domperidona 10mg EMS": "https://www.drogasil.com.br/domperidona-10mg-ems-generico-60-comprimidos.html",
+        "Fluconazol 150mg Cimed": "https://www.drogasil.com.br/fluconazol-150mg-cimed-genericos-2-capsulas.html",
+        "Nimesulida 100mg Eurofarma": "https://www.drogasil.com.br/nimesulida-100-mg-eurofarma-generico-12-comprimidos.html",
+        "Atenolol 25mg Medley": "https://www.drogasil.com.br/atenolol-25-mg-medley-generico-30-comprimidos.html",
+        "Loratadina 10mg Cimed": "https://www.drogasil.com.br/loratadina-10mg-12-comprimidos.html",
+        "Pantoprazol 40mg Medley": "https://www.drogasil.com.br/pantoprazol-40mg-medley-genericos-28-comprimidos-revestidos.html",
     }
 
     if chave_produto not in d_para:

@@ -1,0 +1,371 @@
+{
+  "drogaria_sao_paulo": {
+    "Mounjaro 2,5mg": {
+      "sku": "887528",
+      "url": "https://www.drogariasaopaulo.com.br/mounjaro-2-5mg-eli-lilly-4-seringa-preenchidas-0-5ml-solucao-injetavel-subcutaneo---4-canetas/p",
+      "name_found": "Mounjaro Tirzepatida 2,5mg/0,5ml 4 Seringas Preenchidas Solução Injetável Subcutânea + 4 Canetas",
+      "score": 3
+    },
+    "Mounjaro 5mg": {
+      "sku": "887455",
+      "url": "https://www.drogariasaopaulo.com.br/mounjaro-5mg-eli-lilly-4-seringa-preenchida-0-5ml-solucao-injetavel-subcutaneo-4-canetas/p",
+      "name_found": "Mounjaro Tirzepatida 5mg/0,5ml 4 Seringas Preenchidas Solução Injetável Subcutânea + 4 Canetas",
+      "score": 4
+    },
+    "Mounjaro 7,5mg": {
+      "sku": "887951",
+      "url": "https://www.drogariasaopaulo.com.br/mounjaro-7-5mg-eli-lilly-4-seringa-0-5ml-solucao-injetavel-subcutaneo-4-canetas/p",
+      "name_found": "Mounjaro Tirzepatida 7,5mg 4 seringas preenchidas de 0,5ml Solução Injetável Subcutâneo + 4 Canetas",
+      "score": 3
+    },
+    "Tadalafila 5mg EMS": {
+      "sku": "602426",
+      "url": "https://www.drogariasaopaulo.com.br/tadalafila-5mg-generico-ems-30-comprimidos-revestidos/p",
+      "name_found": "Tadalafila 5mg Genérico EMS 30 Comprimidos Revestidos",
+      "score": 4
+    },
+    "Glifage XR 500mg": {
+      "sku": "155349",
+      "url": "https://www.drogariasaopaulo.com.br/glifage-xr-500mg-merck-sharp-30-comprimidos/p",
+      "name_found": "Glifage XR Cloridrato De Metformina 500mg 30 comprimidos",
+      "score": 4
+    },
+    "Wegovy 2,4mg": {
+      "sku": "862045",
+      "url": "https://www.drogariasaopaulo.com.br/wegovy-2-4mg-novo-nordisk-4-doses-injetaveis/p",
+      "name_found": "Wegovy Semaglutida 2,4mg 4 Doses Injetáveis",
+      "score": 3
+    },
+    "Wegovy 0,25mg": {
+      "sku": "862002",
+      "url": "https://www.drogariasaopaulo.com.br/wegovy-25mg-novo-nordisk-4-doses-injetaveis/p",
+      "name_found": "Wegovy Semaglutida 0,25mg 4 Doses Injetáveis",
+      "score": 3
+    },
+    "Dipirona 1g Cimed": {
+      "sku": "841188",
+      "url": "https://www.drogariasaopaulo.com.br/dipirona-monoidratada-1g-generico-cimed-10-comprimidos/p",
+      "name_found": "Dipirona Monoidratada 1g Genérico Cimed 10 Comprimidos",
+      "score": 4
+    },
+    "Mecobe 1000mcg": {
+      "sku": "818992",
+      "url": "https://www.drogariasaopaulo.com.br/mecobe-1000mcg-myralis-90-comprimidos-sublinguais/p",
+      "name_found": "Mecobe Mecobalamina 1000mcg 90 Comprimidos Sublinguais",
+      "score": 3
+    },
+    "Dipirona 500mg Prati Donaduzzi": {
+      "sku": "701173",
+      "url": "https://www.drogariasaopaulo.com.br/dipirona-prati--donaduzzi-500mg-generico-30-comprimidos/p",
+      "name_found": "Dipirona 500mg Genérico Prati Donaduzzi 30 Comprimidos",
+      "score": 5
+    },
+    "Omeprazol 20mg Cimed": {
+      "sku": "684333",
+      "url": "https://www.drogariasaopaulo.com.br/omeprazol-20mg-generico-cimed-56-capsulas/p",
+      "name_found": "Omeprazol 20mg Genérico Cimed 56 Cápsulas",
+      "score": 4
+    },
+    "Glyxambi": {
+      "sku": "681393",
+      "url": "https://www.drogariasaopaulo.com.br/glyxambi-25mg-30-comprimidos-revestidos-boehringer/p",
+      "name_found": "Glyxambi Empagliflozina 25mg + Linagliptina 5mg 30 Comprimidos Revestidos",
+      "score": 1
+    },
+    "Cetoprofeno 150mg Eurofarma": {
+      "sku": "668419",
+      "url": "https://www.drogariasaopaulo.com.br/cetoprofeno-150mg-10-comprimidos-de-liberacao-prolongada-g-eurofarma-labs/p",
+      "name_found": "Cetoprofeno 150mg Genérico Eurofarma 10 Comprimidos De Liberação Prolongada",
+      "score": 4
+    },
+    "Nimesulida 100mg Cimed": {
+      "sku": "645958",
+      "url": "https://www.drogariasaopaulo.com.br/nimesulida-100mg-generico-cimed-12-comprimidos/p",
+      "name_found": "Nimesulida 100mg Genérico Cimed 12 Comprimidos",
+      "score": 4
+    },
+    "Tadalafila 5mg Eurofarma": {
+      "sku": "530174",
+      "url": "https://www.drogariasaopaulo.com.br/tadalafila-5mg-generico-eurofarma-30-comprimidos/p",
+      "name_found": "Tadalafila 5mg Genérico Eurofarma 30 Comprimidos",
+      "score": 4
+    }
+  },
+  "pacheco": {
+    "Glifage XR 500mg": {
+      "sku": "155349",
+      "url": "https://www.drogariaspacheco.com.br/glifage-xr-500mg-merck-sharp-30-comprimidos/p",
+      "name_found": "Glifage XR Cloridrato De Metformina 500mg 30 comprimidos",
+      "score": 4
+    },
+    "Mounjaro 5mg": {
+      "sku": "887455",
+      "url": "https://www.drogariaspacheco.com.br/mounjaro-5mg-eli-lilly-4-seringa-preenchida-0-5ml-solucao-injetavel-subcutaneo-4-canetas/p",
+      "name_found": "Mounjaro Tirzepatida 5mg/0,5ml 4 Seringas Preenchidas Solução Injetável Subcutânea + 4 Canetas",
+      "score": 4
+    },
+    "Mecobe 1000mcg": {
+      "sku": "819000",
+      "url": "https://www.drogariaspacheco.com.br/mecobe-1000mcg-myralis-30-comprimidos-sublinguais/p",
+      "name_found": "Mecobe Mecobalamina 1000mcg 30 Comprimidos sublinguais",
+      "score": 3
+    },
+    "Glyxambi": {
+      "sku": "681385",
+      "url": "https://www.drogariaspacheco.com.br/glyxambi-10mg-30-comprimidos-revestidos-boehringer/p",
+      "name_found": "Glyxambi Empagliflozina 10mg + Linagliptina 5mg 30 Comprimidos Revestidos",
+      "score": 1
+    },
+    "Nimesulida 100mg Cimed": {
+      "sku": "645958",
+      "url": "https://www.drogariaspacheco.com.br/nimesulida-100mg-generico-cimed-12-comprimidos/p",
+      "name_found": "Nimesulida 100mg Genérico Cimed 12 Comprimidos",
+      "score": 4
+    },
+    "Tadalafila 5mg EMS": {
+      "sku": "602426",
+      "url": "https://www.drogariaspacheco.com.br/tadalafila-5mg-generico-ems-30-comprimidos-revestidos/p",
+      "name_found": "Tadalafila 5mg Genérico EMS 30 Comprimidos Revestidos",
+      "score": 4
+    },
+    "Fluconazol 150mg Cimed": {
+      "sku": "525529",
+      "url": "https://www.drogariaspacheco.com.br/fluconazol-150mg-generico-cimed-2-comprimidos/p",
+      "name_found": "Fluconazol 150mg Genérico Cimed 2 Comprimidos",
+      "score": 4
+    },
+    "Rosuvastatina 20mg EMS": {
+      "sku": "314625",
+      "url": "https://www.drogariaspacheco.com.br/rosuvastatina-calcica-20mg-generico-30-comprimidos-revestidos/p",
+      "name_found": "Rosuvastatina Cálcica 20mg Genérico EMS 30 Comprimidos Revestidos",
+      "score": 4
+    },
+    "Prednisolona 20mg EMS": {
+      "sku": "290602",
+      "url": "https://www.drogariaspacheco.com.br/prednisolona-20mg-generico-ems-10-comprimidos/p",
+      "name_found": "Prednisolona 20mg Genérico EMS 10 Comprimidos",
+      "score": 4
+    },
+    "Ibuprofeno 600mg Prati Donaduzzi": {
+      "sku": "220850",
+      "url": "https://www.drogariaspacheco.com.br/ibuprofeno-600mg-generico-prati-donaduzzi-20-comprimidos/p",
+      "name_found": "Ibuprofeno 600mg Genérico Prati Donaduzzi 20 Comprimidos",
+      "score": 5
+    },
+    "Neosoro": {
+      "sku": "116408",
+      "url": "https://www.drogariaspacheco.com.br/neosoro-adulto-solucao-nasal-30ml/p",
+      "name_found": "Descongestionante Neosoro Adulto Cloridrato De Nafazolina 30ml Solução Nasal",
+      "score": 1
+    },
+    "Aradois 50mg": {
+      "sku": "74128",
+      "url": "https://www.drogariaspacheco.com.br/aradois-50mg-biolab-30-comprimidos/p",
+      "name_found": "Aradois Losartana Potássica 50mg 30 Comprimidos",
+      "score": 3
+    },
+    "Pantoprazol 40mg Medley": {
+      "sku": "9300",
+      "url": "https://www.drogariaspacheco.com.br/pantoprazol-generico-40mg-14-comprimidos/p",
+      "name_found": "Pantoprazol 40mg Genérico Medley 14 Comprimidos",
+      "score": 4
+    },
+    "Aerolin": {
+      "sku": "50822",
+      "url": "https://www.drogariaspacheco.com.br/aerolin-gsk-gotas-10ml/p",
+      "name_found": "Aerolin Sulfato De Salbutamol 5mg/ml 10ml Gotas",
+      "score": 1
+    },
+    "Wegovy 1mg": {
+      "sku": "862029",
+      "url": "https://www.drogariaspacheco.com.br/wegovy-1mg-novo-nordisk-4-doses-injetaveis/p",
+      "name_found": "Wegovy Semaglutida 1mg 4 Doses Injetáveis",
+      "score": 3
+    }
+  },
+  "indiana": {
+    "Rosuvastatina 20mg EMS": {
+      "sku": "50136",
+      "url": "https://www.farmaciaindiana.com.br/rosuvastatina-calcica-20mg-ems-generico-30-comprimidos/p",
+      "name_found": "Rosuvastatina Cálcica 20mg Ems Genérico 30 Comprimidos",
+      "score": 4
+    },
+    "Hidroclorotiazida 25mg EMS": {
+      "sku": "194874",
+      "url": "https://www.farmaciaindiana.com.br/hidroclorotiazida-25mg-ems-generico-30-comprimidos-1/p",
+      "name_found": "Hidroclorotiazida 25mg Ems Genérico 30 Comprimidos",
+      "score": 4
+    },
+    "Nimesulida 100mg EMS": {
+      "sku": "14899",
+      "url": "https://www.farmaciaindiana.com.br/nimesilam-nimesulida-100mg-12-comprimidos/p",
+      "name_found": "Nimesilam Nimesulida 100mg EMS 12 Comprimidos",
+      "score": 4
+    },
+    "Tadalafila 20mg EMS": {
+      "sku": "86616",
+      "url": "https://www.farmaciaindiana.com.br/tadalafila-20mg-ems-generico-4-comprimidos/p",
+      "name_found": "Tadalafila 20mg Ems Genéricos 4 Comprimidos",
+      "score": 4
+    },
+    "Apixabana 2,5mg EMS": {
+      "sku": "190645",
+      "url": "https://www.farmaciaindiana.com.br/apixabana-2-5mg-ems-generico-60-comprimidos-revestidos/p",
+      "name_found": "Apixabana 2,5mg EMS Genérico 60 Comprimidos Revestidos",
+      "score": 4
+    },
+    "Novalgina Flash 1g": {
+      "sku": "199261",
+      "url": "https://www.farmaciaindiana.com.br/novalgina-flash-1g-dipirona-130mg-cafeina-16-comprimidos-analgesico/p",
+      "name_found": "Novalgina Flash 1g Dipirona + 130mg Cafeína 16 comprimidos Analgésico",
+      "score": 4
+    },
+    "Leite de Magnesia EnoMagno": {
+      "sku": "185478",
+      "url": "https://www.farmaciaindiana.com.br/leite-de-magnesia-enomagno-tradicional-10ml/p",
+      "name_found": "Leite de Magnésia EnoMagno Tradicional 10ml HALEON 1 Sachê",
+      "score": 3
+    },
+    "Sal de Fruta Eno Limao": {
+      "sku": "20676",
+      "url": "https://www.farmaciaindiana.com.br/sal-de-fruta-eno-limao-100g/p",
+      "name_found": "Sal De Fruta Eno Limão 100g Glaxosmithkline Otc 100g",
+      "score": 4
+    },
+    "Paracetamol 750mg Cimed": {
+      "sku": "19784",
+      "url": "https://www.farmaciaindiana.com.br/paracetamol-750mg-cimed-generico-20-comprimidos/p",
+      "name_found": "Paracetamol 750mg Cimed Genéricos 20 Comprimidos",
+      "score": 4
+    },
+    "Metoprolol 25mg Cimed": {
+      "sku": "174614",
+      "url": "https://www.farmaciaindiana.com.br/succinato-metoprolol-25mg-30-comprimidos-liberacao-prolongada-generico/p",
+      "name_found": "Succinato Metoprolol 25mg Cimed 30 Comprimidos",
+      "score": 4
+    },
+    "Tadalafila 20mg Cimed": {
+      "sku": "132111",
+      "url": "https://www.farmaciaindiana.com.br/tadalafila-20mg-cimed-generico-4-comprimidos/p",
+      "name_found": "Tadalafila 20mg Cimed Genérico 4 Comprimidos",
+      "score": 4
+    },
+    "Nimesulida 100mg Cimed": {
+      "sku": "83662",
+      "url": "https://www.farmaciaindiana.com.br/nimesulida-100mg-cimed-generico-12-comprimidos/p",
+      "name_found": "Nimesulida 100mg Cimed Genéricos 12 Comprimidos",
+      "score": 4
+    },
+    "Loratadina 10mg Cimed": {
+      "sku": "140271",
+      "url": "https://www.farmaciaindiana.com.br/loratadina-dez-mg-cimed-generico-doze-comprimidos/p",
+      "name_found": "Loratadina 10mg Cimed Genérico 12 Comprimidos",
+      "score": 4
+    },
+    "Dipirona 500mg EMS": {
+      "sku": "59999",
+      "url": "https://www.farmaciaindiana.com.br/dipirona-sodica-500mg-ems-generico-10-comprimidos/p",
+      "name_found": "Dipirona Sódica 500mg Ems Genérico 10 Comprimidos",
+      "score": 4
+    },
+    "Losartana 50mg EMS": {
+      "sku": "19887",
+      "url": "https://www.farmaciaindiana.com.br/losart-pot-50mg-30cpr-ems/p",
+      "name_found": "Losartana Potássica 50mg Genérico EMS 30 Comprimidos",
+      "score": 4
+    }
+  },
+  "santa_lucia": {
+    "Losartana 50mg": {
+      "sku": "1033234",
+      "url": "https://www.santaluciadrogarias.com.br/losart-potassica-50mg-30-cprs---teu-g-/p",
+      "name_found": "Losartana Potassica 50Mg 30 Cprs - Teu (G) (P)",
+      "score": 3
+    },
+    "Dipirona 500mg": {
+      "sku": "999948",
+      "url": "https://www.santaluciadrogarias.com.br/dipirona-sod-500mg-10ml---med-g-/p",
+      "name_found": "Dipirona Sódica 500mg/ml Gotas 10ml",
+      "score": 3
+    },
+    "Glifage XR 500mg": {
+      "sku": "1001618",
+      "url": "https://www.santaluciadrogarias.com.br/glifage-xr-500mg-30-cprs/p",
+      "name_found": "GLIFAGE XR 500MG 30 CPRS (P)  - PBM",
+      "score": 4
+    },
+    "Neosoro": {
+      "sku": "222097",
+      "url": "https://www.santaluciadrogarias.com.br/neosoro-sol-adulto-30ml-neo/p",
+      "name_found": "NEOSORO SOL ADULTO 30ML-NEO",
+      "score": 1
+    },
+    "Tadalafila 5mg": {
+      "sku": "1057267",
+      "url": "https://www.santaluciadrogarias.com.br/tadalafila-5mg-30-cprs---cimed-g-/p",
+      "name_found": "Tadalafila 5mg com 30 Comprimidos Cimed",
+      "score": 3
+    },
+    "Nimesulida 100mg": {
+      "sku": "1059884",
+      "url": "https://www.santaluciadrogarias.com.br/nimesulida-100mg-12-cprs---cimed--g-/p",
+      "name_found": "Nimesulida 100Mg 12 Cprs - Cimed (G)",
+      "score": 3
+    },
+    "Simeticona 75mg/ml": {
+      "sku": "1040799",
+      "url": "https://www.santaluciadrogarias.com.br/luftal-gts-30ml/p",
+      "name_found": "Luftal Simeticona 75mg/ml Gotas 30ml",
+      "score": 3
+    },
+    "Omeprazol 20mg": {
+      "sku": "1000550",
+      "url": "https://www.santaluciadrogarias.com.br/omeprazol-20mg-28-caps---teu-g-----/p",
+      "name_found": "Omeprazol 20Mg 28Caps - Teu (G)",
+      "score": 3
+    },
+    "Paracetamol 750mg": {
+      "sku": "1038709",
+      "url": "https://www.santaluciadrogarias.com.br/paracetamol-750mg-20-cprs---teu-g---/p",
+      "name_found": "PARACETAMOL 750MG 20 CPRS - TEU(G)",
+      "score": 3
+    },
+    "Hidroclorotiazida 25mg": {
+      "sku": "1026483",
+      "url": "https://www.santaluciadrogarias.com.br/hidroclorotiazida-25mg-30cprs---teu-g---p---/p",
+      "name_found": "HIDROCLOROTIAZIDA 25MG 30 CPRS - TEU (G) (P)",
+      "score": 3
+    },
+    "Buscopan Composto": {
+      "sku": "1073539",
+      "url": "https://www.santaluciadrogarias.com.br/buscopan-composto-gotas-20ml/p",
+      "name_found": "Buscopan Composto Gotas 20Ml",
+      "score": 2
+    },
+    "Dorflex": {
+      "sku": "1026748",
+      "url": "https://www.santaluciadrogarias.com.br/dorflex-36-comprimidos/p",
+      "name_found": "Dorflex 36 Cprs",
+      "score": 1
+    },
+    "Microvlar": {
+      "sku": "1054696",
+      "url": "https://www.santaluciadrogarias.com.br/microvlar-bl-3x21-dgrs/p",
+      "name_found": "MICROVLAR BL 3X21 DGRS",
+      "score": 1
+    },
+    "Addera D3": {
+      "sku": "1057455",
+      "url": "https://www.santaluciadrogarias.com.br/addera-d3-50000ui-8-cprs/p",
+      "name_found": "ADDERA D3 50000UI 8 CPRS",
+      "score": 3
+    },
+    "Ciclo 21": {
+      "sku": "1005123",
+      "url": "https://www.santaluciadrogarias.com.br/elani-ciclo-21-cprs--/p",
+      "name_found": "Elani Ciclo 21 Cprs",
+      "score": 3
+    }
+  },
+  "drogasil": {}
+}

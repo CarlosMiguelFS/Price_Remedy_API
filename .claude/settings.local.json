@@ -1,0 +1,15 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(python -c \"import httpx; print\\('ok'\\)\")",
+      "Bash(python -c ' *)",
+      "Bash(python -c \"from playwright.sync_api import sync_playwright; print\\('ok'\\)\")",
+      "Bash(python scrape_skus.py)",
+      "Bash(python -m playwright install chromium)",
+      "Bash(timeout 30 echo \"wait\")",
+      "WebSearch",
+      "WebFetch(domain:www.drogasil.com.br)",
+      "Bash(python scrape_drogasil_only.py[)"
+    ]
+  }
+}

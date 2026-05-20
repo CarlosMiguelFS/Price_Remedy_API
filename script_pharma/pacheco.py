@@ -15,7 +15,22 @@ def check_pacheco(cep,produto):
         "Ritalina LA 10mg/ml":"276162",
         "Ritalina LA 20mg/ml":"118680",
         "Ritalina LA 30mg/ml":"118699",
-        "Ritalina LA 40mg/ml":"118702"
+        "Ritalina LA 40mg/ml":"118702",
+        # Top 15 mais vendidos (markdown)
+        "Glifage XR 500mg": "155349",
+        "Mecobe 1000mcg": "819000",
+        "Glyxambi": "681385",
+        "Nimesulida 100mg Cimed": "645958",
+        "Tadalafila 5mg EMS": "602426",
+        "Fluconazol 150mg Cimed": "525529",
+        "Rosuvastatina 20mg EMS": "314625",
+        "Prednisolona 20mg EMS": "290602",
+        "Ibuprofeno 600mg Prati Donaduzzi": "220850",
+        "Neosoro": "116408",
+        "Aradois 50mg": "74128",
+        "Pantoprazol 40mg Medley": "9300",
+        "Aerolin": "50822",
+        "Wegovy 1mg": "862029",
     }
 
     d_para_link = {
@@ -31,6 +46,21 @@ def check_pacheco(cep,produto):
         "Ritalina LA 20mg/ml":"https://www.drogariaspacheco.com.br/ritalina-la-20mg-novartis-biociencias-30-comprimidos/p",
         "Ritalina LA 30mg/ml":"https://www.drogariaspacheco.com.br/ritalina-la-30mg-novartis-biociencias-30-comprimidos/p",
         "Ritalina LA 40mg/ml":"https://www.drogariaspacheco.com.br/ritalina-la-40mg-novartis-biociencias-30-comprimidos/p",
+        # Top 15 mais vendidos (markdown)
+        "Glifage XR 500mg": "https://www.drogariaspacheco.com.br/glifage-xr-500mg-merck-sharp-30-comprimidos/p",
+        "Mecobe 1000mcg": "https://www.drogariaspacheco.com.br/mecobe-1000mcg-myralis-30-comprimidos-sublinguais/p",
+        "Glyxambi": "https://www.drogariaspacheco.com.br/glyxambi-10mg-30-comprimidos-revestidos-boehringer/p",
+        "Nimesulida 100mg Cimed": "https://www.drogariaspacheco.com.br/nimesulida-100mg-generico-cimed-12-comprimidos/p",
+        "Tadalafila 5mg EMS": "https://www.drogariaspacheco.com.br/tadalafila-5mg-generico-ems-30-comprimidos-revestidos/p",
+        "Fluconazol 150mg Cimed": "https://www.drogariaspacheco.com.br/fluconazol-150mg-generico-cimed-2-comprimidos/p",
+        "Rosuvastatina 20mg EMS": "https://www.drogariaspacheco.com.br/rosuvastatina-calcica-20mg-generico-30-comprimidos-revestidos/p",
+        "Prednisolona 20mg EMS": "https://www.drogariaspacheco.com.br/prednisolona-20mg-generico-ems-10-comprimidos/p",
+        "Ibuprofeno 600mg Prati Donaduzzi": "https://www.drogariaspacheco.com.br/ibuprofeno-600mg-generico-prati-donaduzzi-20-comprimidos/p",
+        "Neosoro": "https://www.drogariaspacheco.com.br/neosoro-adulto-solucao-nasal-30ml/p",
+        "Aradois 50mg": "https://www.drogariaspacheco.com.br/aradois-50mg-biolab-30-comprimidos/p",
+        "Pantoprazol 40mg Medley": "https://www.drogariaspacheco.com.br/pantoprazol-generico-40mg-14-comprimidos/p",
+        "Aerolin": "https://www.drogariaspacheco.com.br/aerolin-gsk-gotas-10ml/p",
+        "Wegovy 1mg": "https://www.drogariaspacheco.com.br/wegovy-1mg-novo-nordisk-4-doses-injetaveis/p",
     }
 
     url_pharm = "https://www.drogariaspacheco.com.br/api/checkout/pub/orderforms/simulation"
