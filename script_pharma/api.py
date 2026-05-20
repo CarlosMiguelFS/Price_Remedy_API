@@ -17,6 +17,7 @@ app = FastAPI()
 origins = [
     "https://med-radar-nine.vercel.app",
     "https://radar-medicamentos.base44.app",
+    "https://radar-medicamentos.base44.app/"
 ]
 
 app.add_middleware(
