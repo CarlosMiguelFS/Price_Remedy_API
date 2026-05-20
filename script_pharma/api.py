@@ -16,8 +16,6 @@ app = FastAPI()
 
 origins = [
     "https://med-radar-nine.vercel.app",
-    "https://med-location.base44.app",
-    "http://localhost:3000",
     "https://radar-medicamentos.base44.app",
 ]
 
