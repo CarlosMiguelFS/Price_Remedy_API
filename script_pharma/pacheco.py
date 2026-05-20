@@ -83,23 +83,51 @@ def check_pacheco(cep,produto):
         "postalCode": cep
     }
 
-    resp_frete = httpx.post(url_pharm, json= payload ,headers=headers).json()
+    resp_frete = httpx.post(url_pharm, json=payload, headers=headers).json()
     resp_price = httpx.get(url_price, headers=headers).json()
     resultados = []
 
-    if resp_frete.get("logisticsInfo"):
-        preco_padrao = float(resp_frete["items"][0]["price"]/100)
-        melhor_preco = float(str(resp_price[0]["Valor Desconto Minimo"]).replace("['","").replace("']",""))
+    if not resp_frete.get("logisticsInfo") or not resp_frete.get("items"):
+        return None
 
-        for product in resp_frete["logisticsInfo"][0]["slas"]:
-            if product.get("pickupStoreInfo", {}).get("address"):
-                resultados.append({
-                    "endereco": product["pickupStoreInfo"]["address"],
-                    "value": preco_padrao,
-                    "melhor_preco": melhor_preco,
-                    "loja": "Pacheco",
-                    "url": d_para_link[produto]
-                })
-    
+    try:
+        preco_padrao = float(resp_frete["items"][0]["price"]) / 100
+    except (KeyError, IndexError, TypeError, ValueError):
+        return None
+
+    # "Valor Desconto Minimo" só existe em medicamentos controlados (PMC) como Mounjaro/Ritalina.
+    # Para OTC (Glifage, Tadalafila, Nimesulida, etc.) cai no fallback da oferta comercial.
+    melhor_preco = preco_padrao
+    try:
+        valor_pmc = resp_price[0].get("Valor Desconto Minimo")
+        if valor_pmc:
+            melhor_preco = float(str(valor_pmc).replace("['", "").replace("']", ""))
+    except (KeyError, IndexError, TypeError, ValueError, AttributeError):
+        pass
+
+    if melhor_preco >= preco_padrao:
+        try:
+            offer = resp_price[0]["items"][0]["sellers"][0]["commertialOffer"]
+            offer_price = float(offer.get("Price") or 0)
+            if offer_price and offer_price < preco_padrao:
+                melhor_preco = offer_price
+        except (KeyError, IndexError, TypeError, ValueError, AttributeError):
+            pass
+
+    porcentagem = 0.0
+    if preco_padrao > 0 and melhor_preco < preco_padrao:
+        porcentagem = round(((preco_padrao - melhor_preco) / preco_padrao) * 100, 2)
+
+    for product in resp_frete["logisticsInfo"][0]["slas"]:
+        if product.get("pickupStoreInfo", {}).get("address"):
+            resultados.append({
+                "endereco": product["pickupStoreInfo"]["address"],
+                "preco_padrao": round(preco_padrao, 2),
+                "melhor_preco": round(melhor_preco, 2),
+                "porcentagem_diferenca": porcentagem,
+                "loja": "Pacheco",
+                "url": d_para_link.get(produto, "")
+            })
+
     return resultados or None
 

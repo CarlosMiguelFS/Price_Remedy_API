@@ -40,30 +40,50 @@ def check_drogaria_sao_paulo(cep,produto):
         "Tadalafila 5mg Eurofarma": "https://www.drogariasaopaulo.com.br/tadalafila-5mg-generico-eurofarma-30-comprimidos/p",
     }
 
+    if produto.strip() not in d_para:
+        return None
+
     payload = {
-        "items":[
+        "items": [
             {
-                "id":d_para[produto.strip()],
-                "quantity":1,
-                "seller":"1"
+                "id": d_para[produto.strip()],
+                "quantity": 1,
+                "seller": "1"
             }
         ],
-        "country":"BRA",
-        "postalCode":f"{cep}"
+        "country": "BRA",
+        "postalCode": f"{cep}"
     }
 
-    headers = {"User-Agent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/139.0.0.0 Safari/537.36 OPR/123.0.0.0"}
-    endereco = httpx.post("https://www.drogariasaopaulo.com.br/api/checkout/pub/orderforms/simulation", json=payload, headers=headers).json()
-    preco = endereco["items"][0]["price"] / 100
-    resultados = []
+    headers = {
+        "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/139.0.0.0 Safari/537.36"
+    }
 
+    try:
+        endereco = httpx.post(
+            "https://www.drogariasaopaulo.com.br/api/checkout/pub/orderforms/simulation",
+            json=payload,
+            headers=headers,
+            timeout=20,
+        ).json()
+    except Exception as e:
+        print(f"Erro Drogaria SP (rede): {e}")
+        return None
+
+    try:
+        preco = float(endereco["items"][0]["price"]) / 100
+    except (KeyError, IndexError, TypeError, ValueError):
+        return None
+
+    resultados = []
     for values in endereco.get("pickupPoints", []):
         if values.get("address"):
             resultados.append({
                 "loja": "Drogaria São Paulo",
                 "endereco": dict(values["address"]),
-                "url": d_para_link[produto],
-                "melhor_preco": preco
+                "url": d_para_link.get(produto, ""),
+                "melhor_preco": round(preco, 2),
+                "preco_padrao": round(preco, 2),
             })
 
     return resultados or None

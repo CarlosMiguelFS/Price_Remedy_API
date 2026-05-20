@@ -314,41 +314,110 @@ class ShortenRequest(BaseModel):
         return v
 
 
+def _extrair_short_url_lomadee(data) -> str | None:
+    """Extrai a URL trackeada de qualquer formato de resposta da Lomadee."""
+    if not isinstance(data, dict):
+        return None
+
+    # Formato GET (single): {"deeplink": {"url": "https://lmdee.link/..."}}
+    deeplink_single = data.get("deeplink")
+    if isinstance(deeplink_single, dict):
+        for k in ("url", "shortUrl", "ssl", "deeplink"):
+            v = deeplink_single.get(k)
+            if isinstance(v, str) and v.startswith("http"):
+                return v
+
+    # Formato POST (lista): {"deeplinks": [{"url": "..."}]}
+    deeplinks = data.get("deeplinks") or data.get("data")
+    if isinstance(deeplinks, list) and deeplinks:
+        item = deeplinks[0] or {}
+        if isinstance(item, dict):
+            for k in ("url", "shortUrl", "deeplink", "ssl"):
+                v = item.get(k)
+                if isinstance(v, str) and v.startswith("http"):
+                    return v
+
+    # Formato achatado: {"url": "..."}
+    for k in ("url", "shortUrl"):
+        v = data.get(k)
+        if isinstance(v, str) and v.startswith("http"):
+            return v
+
+    return None
+
+
+def _lomadee_call(method: str, url: str, params: dict, body: dict | None = None):
+    """Faz a chamada para a Lomadee e devolve (status, parsed_data, raw_text)."""
+    try:
+        if method == "GET":
+            resp = httpx.get(url, params=params, timeout=15.0)
+        else:
+            resp = httpx.post(url, params=params, json=body, timeout=15.0)
+        raw = resp.text[:1000]
+        print(f"[Lomadee {method}] status={resp.status_code} body={raw}")
+        try:
+            data = resp.json()
+        except Exception:
+            data = None
+        return resp.status_code, data, raw
+    except httpx.HTTPError as e:
+        print(f"[Lomadee {method}] erro de rede: {e}")
+        return 0, None, str(e)
+
+
 @app.post("/affiliate/shorten")
 def affiliate_shorten(payload: ShortenRequest, request: Request):
     _check_rate_limit(_client_ip(request), "affiliate", RATE_LIMIT_PER_MIN_AFFILIATE)
 
     if not LOMADEE_APP_TOKEN:
-        raise HTTPException(status_code=503, detail="Integração Lomadee indisponível")
+        raise HTTPException(status_code=503, detail="Lomadee app token não configurado")
 
     source_id = LOMADEE_SOURCE_ID or payload.channelId or LOMADEE_DEFAULT_CHANNEL
     if not source_id:
-        raise HTTPException(status_code=500, detail="LOMADEE_SOURCE_ID não configurado")
+        raise HTTPException(status_code=500, detail="Lomadee sourceId não configurado")
 
     api_url = f"https://api.lomadee.com/v3/{LOMADEE_APP_TOKEN}/deeplink/_create"
-    try:
-        resp = httpx.post(
-            api_url,
-            params={"sourceId": source_id},
-            json={"deeplink": [{"url": payload.url}]},
-            timeout=10.0,
-        )
-        if resp.status_code >= 400:
-            raise HTTPException(status_code=502, detail="Falha Lomadee")
-        data = resp.json() or {}
-    except httpx.HTTPError:
-        raise HTTPException(status_code=502, detail="Falha ao contatar Lomadee")
 
-    deeplinks = data.get("deeplinks") or data.get("data") or []
-    short_url = None
-    if isinstance(deeplinks, list) and deeplinks:
-        item = deeplinks[0] or {}
-        short_url = item.get("deeplink") or item.get("shortUrl") or item.get("url")
+    # 1ª tentativa: GET com query params (formato single-url, mais comum).
+    status, data, raw = _lomadee_call("GET", api_url, {"sourceId": source_id, "url": payload.url})
+    if status and status < 400 and data:
+        short_url = _extrair_short_url_lomadee(data)
+        if short_url:
+            return {"shortUrl": short_url, "originalUrl": payload.url, "method": "GET"}
 
-    if not short_url:
-        raise HTTPException(status_code=502, detail="Lomadee não retornou URL")
+    # 2ª tentativa: POST com body em lista (formato bulk).
+    status, data, raw = _lomadee_call(
+        "POST", api_url, {"sourceId": source_id}, {"deeplink": [{"url": payload.url}]}
+    )
+    if status and status < 400 and data:
+        short_url = _extrair_short_url_lomadee(data)
+        if short_url:
+            return {"shortUrl": short_url, "originalUrl": payload.url, "method": "POST"}
 
-    return {"shortUrl": short_url}
+    print(f"[Lomadee] falha ambas tentativas. raw={raw}")
+    raise HTTPException(status_code=502, detail="Lomadee não retornou URL trackeada")
+
+
+@app.get("/affiliate/debug")
+def affiliate_debug(url: str, request: Request):
+    """Endpoint de diagnóstico: mostra a resposta crua da Lomadee. NÃO usar em produção sem auth."""
+    _check_rate_limit(_client_ip(request), "affiliate", RATE_LIMIT_PER_MIN_AFFILIATE)
+    if not LOMADEE_APP_TOKEN:
+        return {"ok": False, "erro": "LOMADEE_APP_TOKEN não setado"}
+    source_id = LOMADEE_SOURCE_ID or LOMADEE_DEFAULT_CHANNEL
+    if not source_id:
+        return {"ok": False, "erro": "LOMADEE_SOURCE_ID não setado"}
+    api_url = f"https://api.lomadee.com/v3/{LOMADEE_APP_TOKEN}/deeplink/_create"
+    s_get, d_get, raw_get = _lomadee_call("GET", api_url, {"sourceId": source_id, "url": url})
+    s_post, d_post, raw_post = _lomadee_call(
+        "POST", api_url, {"sourceId": source_id}, {"deeplink": [{"url": url}]}
+    )
+    return {
+        "sourceId": source_id,
+        "input_url": url,
+        "get": {"status": s_get, "data": d_get, "raw": raw_get, "short": _extrair_short_url_lomadee(d_get) if d_get else None},
+        "post": {"status": s_post, "data": d_post, "raw": raw_post, "short": _extrair_short_url_lomadee(d_post) if d_post else None},
+    }
 
 
 @app.get("/buscar/{cep}")

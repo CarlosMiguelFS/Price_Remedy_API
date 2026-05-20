@@ -57,32 +57,57 @@ def check_pague_menos(cep,produto):
         "Addera D3": "https://www.paguemenos.com.br/addera-d3-600ui-gotas-5ml/p",
         "Ciclo 21": "https://www.paguemenos.com.br/ciclo-21-cartela-com-21-comprimidos/p",
     }
-    url_price = f"https://www.paguemenos.com.br/api/catalog_system/pub/products/search?fq=skuId:{d_para[produto]}"
+    if produto.strip() not in d_para:
+        return None
 
-    resp_price = httpx.get(url_price).json()
-    standard_price  = resp_price[0]["items"][0]["sellers"][0]["commertialOffer"]["ListPrice"]
-    best_price  = resp_price[0]["items"][0]["sellers"][0]["commertialOffer"]["Price"]
-
-    percentage_price = ((standard_price - best_price) / standard_price) * 100
-
-    payload = {
-        "items":[
-            {
-                "id":d_para[produto.strip()],
-                "quantity":1,
-                "seller":"1"
-            }
-        ],
-        "country":"BRA",
-        "postalCode":f"{cep}"
+    sku = d_para[produto.strip()]
+    headers = {
+        "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/139.0.0.0 Safari/537.36"
     }
 
-    headers = {"User-Agent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/139.0.0.0 Safari/537.36 OPR/123.0.0.0"}
-    endereco = httpx.post("https://www.paguemenos.com.br/api/checkout/pub/orderForms/simulation", json=payload, headers=headers).json()
-    resultados = []
+    url_price = f"https://www.paguemenos.com.br/api/catalog_system/pub/products/search?fq=skuId:{sku}"
+    try:
+        resp_price = httpx.get(url_price, headers=headers, timeout=20).json()
+        offer = resp_price[0]["items"][0]["sellers"][0]["commertialOffer"]
+        standard_price = float(offer.get("ListPrice") or offer.get("Price") or 0)
+        best_price = float(offer.get("Price") or 0)
+    except (KeyError, IndexError, TypeError, ValueError, AttributeError):
+        return None
 
-    for values in endereco.get("pickupPoints",[]):
+    if not best_price or not standard_price:
+        return None
+
+    percentage_price = 0.0
+    if standard_price > 0 and best_price < standard_price:
+        percentage_price = round(((standard_price - best_price) / standard_price) * 100, 2)
+
+    payload = {
+        "items": [{"id": sku, "quantity": 1, "seller": "1"}],
+        "country": "BRA",
+        "postalCode": f"{cep}"
+    }
+
+    try:
+        endereco = httpx.post(
+            "https://www.paguemenos.com.br/api/checkout/pub/orderForms/simulation",
+            json=payload,
+            headers=headers,
+            timeout=20,
+        ).json()
+    except Exception as e:
+        print(f"Erro Pague Menos (rede): {e}")
+        return None
+
+    resultados = []
+    for values in endereco.get("pickupPoints", []):
         if values.get("address"):
-            resultados.append({"loja": "Pague Menos", "endereco": dict(values["address"]), "url":d_para_link[produto], "melhor_preco" : round(best_price, 2), "preco_padrao":round(standard_price, 2),"porcentagem_diferenca":round(percentage_price, 2) })
+            resultados.append({
+                "loja": "Pague Menos",
+                "endereco": dict(values["address"]),
+                "url": d_para_link.get(produto, ""),
+                "melhor_preco": round(best_price, 2),
+                "preco_padrao": round(standard_price, 2),
+                "porcentagem_diferenca": percentage_price,
+            })
 
     return resultados or None
